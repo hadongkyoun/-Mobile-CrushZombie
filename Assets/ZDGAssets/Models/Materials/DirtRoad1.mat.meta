@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 46aee93891d3db542b3a98f08cc431a2
+timeCreated: 1507548282
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/Models/Materials/DirtRoad1.mat
+  uploadId: 313096

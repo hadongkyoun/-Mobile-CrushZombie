@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 3f46f95bdd60a42479471def9cf185a4
+timeCreated: 1463396710
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/CS_Assets/CS_Scripts/ZDGLoadLevel.cs
+  uploadId: 313096

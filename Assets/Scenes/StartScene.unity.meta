@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3379fd60eba67624ea274c9e6b154306
+timeCreated: 1464267195
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/CS_Assets/CS_Scenes/ZDGStartMenu.unity
+  uploadId: 313096

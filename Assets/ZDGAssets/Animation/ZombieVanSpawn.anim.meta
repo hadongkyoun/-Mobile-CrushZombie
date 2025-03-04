@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f8ce511a715a5644a8f12db16721a273
+timeCreated: 1475531393
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/Animation/ZombieVanSpawn.anim
+  uploadId: 313096

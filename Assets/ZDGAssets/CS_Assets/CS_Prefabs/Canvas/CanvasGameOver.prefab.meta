@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 244628252e0b0a148a810a8372f9ea85
+timeCreated: 1475661155
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/CS_Assets/CS_Prefabs/Canvas/CanvasGameOver.prefab
+  uploadId: 313096

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 416f114f192a6d54bb16d7f0957b2826
+timeCreated: 1475662238
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/CS_Assets/CS_Prefabs/Effects/PickupEffect.prefab
+  uploadId: 313096

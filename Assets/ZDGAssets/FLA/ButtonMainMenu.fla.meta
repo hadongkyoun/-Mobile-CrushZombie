@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a3e337883cd5c7b4886d980fbe4805bb
+timeCreated: 1470230285
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/FLA/ButtonMainMenu.fla
+  uploadId: 313096

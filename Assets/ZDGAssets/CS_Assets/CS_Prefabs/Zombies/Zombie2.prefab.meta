@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: dad03456549188a46b2f8a1c45fe9e10
+timeCreated: 1475684967
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/CS_Assets/CS_Prefabs/Zombies/Zombie2.prefab
+  uploadId: 313096

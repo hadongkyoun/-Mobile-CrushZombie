@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f150c71de1c27ff4e90298b40f4062c3
+timeCreated: 1475389531
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/CS_Assets/CS_Prefabs/Players/ZombieVan1.prefab
+  uploadId: 313096

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a5335a576a04f4b4696f934e213f1166
+timeCreated: 1464466803
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/Animation/CameraShake.anim
+  uploadId: 313096

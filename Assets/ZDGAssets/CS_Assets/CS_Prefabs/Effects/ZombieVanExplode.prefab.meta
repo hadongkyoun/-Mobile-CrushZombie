@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5eb372ab6fae0714ba3aa66e394992df
+timeCreated: 1475604114
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/CS_Assets/CS_Prefabs/Effects/ZombieVanExplode.prefab
+  uploadId: 313096

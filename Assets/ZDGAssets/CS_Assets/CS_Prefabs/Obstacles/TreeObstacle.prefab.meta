@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b26f4ceeb46828f4ca45c4964b316765
+timeCreated: 1475578979
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/CS_Assets/CS_Prefabs/Obstacles/TreeObstacle.prefab
+  uploadId: 313096

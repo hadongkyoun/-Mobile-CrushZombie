@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0dc66ef8442d68948b8ef6a3d1eff1a6
+timeCreated: 1470230285
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/FLA/ButtonSound.fla
+  uploadId: 313096

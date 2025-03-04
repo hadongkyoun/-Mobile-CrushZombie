@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 30584a91438bc5740b12355826abec08
+timeCreated: 1475578703
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/Models/Materials/Barrel.mat
+  uploadId: 313096

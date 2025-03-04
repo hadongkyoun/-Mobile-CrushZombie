@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f74fe97820ebbec4688e3eaf1708ac9e
+timeCreated: 1531347554
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 25800000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/CS_Assets/CS_Scenes/ZDGStartMenu/LightingData.asset
+  uploadId: 313096

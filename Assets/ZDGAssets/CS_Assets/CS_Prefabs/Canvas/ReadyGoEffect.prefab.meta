@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 11426788c50bf454caecd76c9f6dc0d0
+timeCreated: 1463395871
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73074
+  packageName: Zombie Drive - Full Game Template
+  packageVersion: 1.10
+  assetPath: Assets/ZDGAssets/CS_Assets/CS_Prefabs/Canvas/ReadyGoEffect.prefab
+  uploadId: 313096
