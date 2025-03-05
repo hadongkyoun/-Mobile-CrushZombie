@@ -135,6 +135,8 @@ public class ResultUpdater : MonoBehaviour
         acceptButton.gameObject.SetActive(false);
         transform.position = firstUIPos;
         DataManager.Instance.UpdateMoney(finalMoneyValue);
+        finalMoneyValue = 0;
+        moneyText.text = $"{finalMoneyValue}";
         GameManager.Instance.LoadStartScene();
     }
 
