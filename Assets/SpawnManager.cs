@@ -42,8 +42,7 @@ public class SpawnManager : MonoBehaviour
 
     private bool spawnHordeJombies;
 
-
-
+    private bool finishSpawning = false;
     private int id;
 
     private void Awake()
@@ -83,11 +82,12 @@ public class SpawnManager : MonoBehaviour
         else
         {
             // 마지막 스폰 위치를 지나갔을때
-            if (vanTransform != null && vanTransform.position.z > saveVanPosition.z + spawnOffSetZ)
+            if (vanTransform != null && !finishSpawning && vanTransform.position.z > saveVanPosition.z + spawnOffSetZ)
             {
                 SpawnHordeJombies();
                 // van에게 장애물 피하기가 끝났음을 알린다.
                 finishSpawn.Invoke();
+                finishSpawning = true;
             }
         }
     }

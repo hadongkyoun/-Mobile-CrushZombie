@@ -24,8 +24,6 @@ namespace ZombieDriveGame
                 gibsFirstPosition[i] = gibs[i].transform.localPosition;
             }
             Explode();
-
-            Debug.Log("Start");
         }
 
         public void Explode()
@@ -55,7 +53,6 @@ namespace ZombieDriveGame
                 gibs[i].angularVelocity = Vector3.zero;            
             }
             Explode();
-            Debug.Log("ss");
         }
 
     }

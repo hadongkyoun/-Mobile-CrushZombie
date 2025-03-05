@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using UnityEngine;
 
@@ -20,6 +21,9 @@ public class PlayerDatas
     public float increaseMoneyOffline = 0f;
 
     public int money;
+    
+    public DateTime lastPlayTime;
+    public bool wasPlayer;
 }
 
 
@@ -32,10 +36,16 @@ public class DataManager : Singleton<DataManager>
     private string fileName = "/save.txt";
     private string keyWord = "sadiqwjwkd#dkwda!! ej2kS@@";
 
+
     private void Start()
     {
+        TimeSpan elapsedTime = (DateTime.Now).Subtract(playerData.lastPlayTime);
+        float calculateElapsedTime = (float)elapsedTime.TotalMinutes / 2;
+        if (calculateElapsedTime > 0)
+            playerData.money += (int)calculateElapsedTime;
+
+        playerData.wasPlayer = true;
         path = Application.persistentDataPath + fileName;
-        Debug.Log(path);
         LoadData();
     }
 
@@ -95,7 +105,7 @@ public class DataManager : Singleton<DataManager>
             return;
         else
         {
-            playerData.maxVanHP += 1.0f;
+            playerData.maxVanHP += 2.0f;
             playerData.money -= playerData.needUpgradeGold_durability;
             UIManager.Instance.UpdateMoneyText(playerData.money);
             playerData.needUpgradeGold_durability += 10;
@@ -135,5 +145,10 @@ public class DataManager : Singleton<DataManager>
     {
         vanData.maxVanHP = playerData.maxVanHP;
         vanData.boosterSpeedValue = playerData.boosterSpeedValue;
+    }
+
+    public void SaveLastTime(DateTime lastTime)
+    {
+        playerData.lastPlayTime = lastTime;
     }
 }

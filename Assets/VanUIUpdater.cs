@@ -44,7 +44,6 @@ public class VanUIUpdater : Observer
             {
                 comboTextAnimation.Play();
             }
-            Debug.Log("Hit");
         }
         else
         {
@@ -70,6 +69,7 @@ public class VanUIUpdater : Observer
     {
         // 콤보로인해 스피드가 급증하는 경우
         speedUp.Play();
+        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_UPGRADE);
     }
 
     public void SendResultInfo(float firstPosZ, float lastPosZ, float kill)

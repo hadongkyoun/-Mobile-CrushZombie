@@ -22,6 +22,12 @@ public class UIManager : Singleton<UIManager>
     [SerializeField]
     private Text money;
 
+    [SerializeField]
+    private ClickAnimationHandler[] clickAnimationHandlers;
+
+    public bool init = false;
+
+
     public void UpdateMoneyText(float _money)
     {
         money.text = $"{_money}";
@@ -31,17 +37,38 @@ public class UIManager : Singleton<UIManager>
     {
         upgradeBoosterTexts[0].text = $"Lv {lv}";
         upgradeBoosterTexts[1].text = $"{needGold}";
+
+        if (init)
+        {
+            if(clickAnimationHandlers[0] != null)
+                clickAnimationHandlers[0].PlayAnim();
+            AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_UPGRADE);
+        }
     }
     public void UpdateCarHpLevelAndMoney(int lv, int needGold)
     {
         upgradeCarTexts[0].text = $"Lv {lv}";
         upgradeCarTexts[1].text = $"{needGold}";
+
+        if (init)
+        {
+            if (clickAnimationHandlers[1] != null)
+                clickAnimationHandlers[1].PlayAnim();
+            AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_UPGRADE);
+        }
     }
 
     public void UpdateOfflineRewardsLevelAndMoney(int lv, int needGold)
     {
         upgradeOfflineTexts[0].text = $"Lv {lv}";
         upgradeOfflineTexts[1].text = $"{needGold}";
+
+        if (init)
+        {
+            if(clickAnimationHandlers[2] != null)
+                clickAnimationHandlers[2].PlayAnim();
+            AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_UPGRADE);
+        }
     }
 
 
@@ -63,9 +90,11 @@ public class UIManager : Singleton<UIManager>
 
     private void LoadGameSceneUI()
     {
+        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_BUTTON);
         startSceneUI.SetActive(false);
         gameSceneUI.SetActive(true);
         money.transform.parent.gameObject.SetActive(false);
+        
     }
 
 }

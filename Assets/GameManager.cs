@@ -1,24 +1,35 @@
 
+using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
 
-    
+    private void OnApplicationQuit()
+    {
+        DataManager.Instance.SaveLastTime(DateTime.Now);
+    }
+
     public void LoadStartScene()
     {
         DataManager.Instance.SaveData();
        
         SceneManager.LoadScene("StartScene");
         LoadUI(SceneManager.GetSceneByName("StartScene").buildIndex);
+        
+        AudioManager.Instance.PlayBGM(AudioManager.BGM.BGM_TITLE);
     }
 
     public void LoadGameScene()
     {
+        UIManager.Instance.init = true;
+
         DataManager.Instance.LoadData();
 
         SceneManager.LoadScene("GameScene");
         LoadUI(SceneManager.GetSceneByName("GameScene").buildIndex);
+        AudioManager.Instance.PlayBGM(AudioManager.BGM.BGM_INGAME);
     }
 
     private void LoadUI(int index)

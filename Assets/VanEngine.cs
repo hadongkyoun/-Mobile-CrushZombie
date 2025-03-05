@@ -80,7 +80,7 @@ public class VanEngine
             // 라스트 스퍼트 상황이 아닌 경우 좀비랑 부딪힐때 부스터 저장
             if (!lastSpurtActivate)
             {
-                engineBoosterAmount += 0.025f;
+                engineBoosterAmount += 0.05f;
             }
             else
             {
@@ -91,7 +91,14 @@ public class VanEngine
         }
         else
         {
-            engineBoosterAmount -= 0.1f;
+            if (engineBoosterAmount > 0)
+            {
+                engineBoosterAmount -= 0.1f;
+            }
+            else
+            {
+                engineBoosterAmount = 0f;
+            }
 
             vanStraightSpeed -= damage;
         }
@@ -116,12 +123,13 @@ public class VanEngine
         if (activateBooster)
         {
             increaseValue = 10.0f + boosterSpeedValue;
-            engineBoosterAmount -= Time.deltaTime / 4.5f;
-            if (engineBoosterAmount <= 0.05f)
+            engineBoosterAmount -= Time.deltaTime / 5.5f;
+            if (engineBoosterAmount <= 0.02f)
             {
                 activateBooster = false;
                 engineBoosterAmount = 0;
             }
+
             uiBoosterUpdate.Invoke(engineBoosterAmount);
         }
         else
@@ -145,8 +153,6 @@ public class VanEngine
     public void LastSpurt()
     {
         activateBooster = true;
-        increaseValue = 10.0f;
-
         lastSpurtActivate = true;
     }
 

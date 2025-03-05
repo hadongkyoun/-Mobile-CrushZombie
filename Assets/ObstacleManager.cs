@@ -1,5 +1,6 @@
 
 
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObstacleManager : MonoBehaviour
@@ -15,7 +16,7 @@ public class ObstacleManager : MonoBehaviour
 
 
     private Transform vanTransform;
-    private float disappearOffSetZ = 4;
+    private float disappearOffSetZ = 5;
 
 
     private void Awake()
@@ -50,6 +51,23 @@ public class ObstacleManager : MonoBehaviour
 
                 // 플레이어에게 영향
                 vanController.ObjectCollision(obstacleData);
+                switch (obstacleData.Id)
+                {
+                    case 0:
+                        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ZOMBIE);
+                        break;
+                    case 1:
+                        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_TREE);
+                        break;
+                    case 2:
+                        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ROCK);
+                        break;
+                    case 3:
+                        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_BARREL);
+                        break;
+                    default:
+                        break;
+                }
 
             }
 
