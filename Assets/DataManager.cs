@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.IO;
 using UnityEngine;
 
@@ -23,7 +24,6 @@ public class PlayerDatas
     public int money;
     
     public DateTime lastPlayTime;
-    public bool wasPlayer;
 }
 
 
@@ -46,9 +46,11 @@ public class DataManager : Singleton<DataManager>
         Debug.Log(path);
         LoadData();
 
-        if (playerData.wasPlayer)
+
+        if (playerData.lastPlayTime != DateTime.MinValue)
         {
-            UIManager.Instance.ActivateRewardPanel();
+            UpdateRewardMoney();
+            
         }
     }
 
@@ -58,9 +60,7 @@ public class DataManager : Singleton<DataManager>
         float calculateElapsedTime = (float)elapsedTime.TotalMinutes / 2;
         if (calculateElapsedTime > 0)
             playerData.money += (int)calculateElapsedTime;
-
-        if(playerData.wasPlayer == false)
-            playerData.wasPlayer = true;
+        UIManager.Instance.ActivateRewardPanel((int)calculateElapsedTime);
     }
 
     public void SaveData()

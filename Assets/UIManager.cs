@@ -1,4 +1,5 @@
 
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ public class UIManager : Singleton<UIManager>
     private GameObject startSceneUI;
     [SerializeField]
     private GameObject offlineRewardUI;
+    [SerializeField]
+    private Text offlineRewardText;
 
     [Tooltip("0 => Lv, 1 => need Gold")]
     [Space(20)]
@@ -28,15 +31,15 @@ public class UIManager : Singleton<UIManager>
 
     public bool init = false;
 
-    public void ActivateRewardPanel()
+    public void ActivateRewardPanel(int _money)
     {
         offlineRewardUI.SetActive(true);
+        offlineRewardText.text = $"{_money}";
     }
 
     public void DeActivateRewardPanel()
     {
         offlineRewardUI.SetActive(false);
-        DataManager.Instance.UpdateRewardMoney();
     }
 
     public void UpdateMoneyText(float _money)

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
 
-    private void OnApplicationQuit()
+    public void OnApplicationQuit()
     {
         DataManager.Instance.SaveData();
         DataManager.Instance.SaveLastTime(DateTime.Now);
