@@ -63,6 +63,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
             Debug.Log("Unity Ads Rewarded Ad Completed");
             DataManager.Instance.isRewarded = true;
             DataManager.Instance.UpdateMoney();
+            GameManager.Instance.LoadStartScene();
         }
     }
 

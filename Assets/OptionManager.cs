@@ -21,12 +21,12 @@ public class OptionManager : MonoBehaviour
     public void Retry()
     {
         GameManager.Instance.LoadGameScene();
-        Time.timeScale = 1;
+        ExitOption();
     }
 
     public void GoMain()
     {
         GameManager.Instance.LoadStartScene();
-        Time.timeScale = 1;
+        ExitOption();
     }
 }

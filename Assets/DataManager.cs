@@ -42,18 +42,25 @@ public class DataManager : Singleton<DataManager>
 
     private void Start()
     {
-        if (playerData.wasPlayer)
-        {
-            TimeSpan elapsedTime = (DateTime.Now).Subtract(playerData.lastPlayTime);
-            float calculateElapsedTime = (float)elapsedTime.TotalMinutes / 2;
-            if (calculateElapsedTime > 0)
-                playerData.money += (int)calculateElapsedTime;
-        }
-
-        playerData.wasPlayer = true;
         path = Application.persistentDataPath + fileName;
         Debug.Log(path);
         LoadData();
+
+        if (playerData.wasPlayer)
+        {
+            UIManager.Instance.ActivateRewardPanel();
+        }
+    }
+
+    public void UpdateRewardMoney()
+    {
+        TimeSpan elapsedTime = (DateTime.Now).Subtract(playerData.lastPlayTime);
+        float calculateElapsedTime = (float)elapsedTime.TotalMinutes / 2;
+        if (calculateElapsedTime > 0)
+            playerData.money += (int)calculateElapsedTime;
+
+        if(playerData.wasPlayer == false)
+            playerData.wasPlayer = true;
     }
 
     public void SaveData()

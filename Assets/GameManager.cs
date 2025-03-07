@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager>
 
     private void OnApplicationQuit()
     {
+        DataManager.Instance.SaveData();
         DataManager.Instance.SaveLastTime(DateTime.Now);
     }
 

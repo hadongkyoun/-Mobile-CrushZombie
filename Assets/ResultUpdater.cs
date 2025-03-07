@@ -149,9 +149,8 @@ public class ResultUpdater : MonoBehaviour
     {
         DeActivateButtons();
         DataManager.Instance.GetMoneyData(finalMoneyValue);
-        AdsManager.Instance.rewardedAds.ShowAd();
         ReturnUIOrigin();
-        GameManager.Instance.LoadStartScene();
+        AdsManager.Instance.rewardedAds.ShowAd();
     }
 
     private void ReturnUIOrigin()

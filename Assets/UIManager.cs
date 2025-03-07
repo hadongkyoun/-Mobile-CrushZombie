@@ -8,7 +8,8 @@ public class UIManager : Singleton<UIManager>
     private GameObject gameSceneUI;
     [SerializeField]
     private GameObject startSceneUI;
-
+    [SerializeField]
+    private GameObject offlineRewardUI;
 
     [Tooltip("0 => Lv, 1 => need Gold")]
     [Space(20)]
@@ -27,6 +28,16 @@ public class UIManager : Singleton<UIManager>
 
     public bool init = false;
 
+    public void ActivateRewardPanel()
+    {
+        offlineRewardUI.SetActive(true);
+    }
+
+    public void DeActivateRewardPanel()
+    {
+        offlineRewardUI.SetActive(false);
+        DataManager.Instance.UpdateRewardMoney();
+    }
 
     public void UpdateMoneyText(float _money)
     {
