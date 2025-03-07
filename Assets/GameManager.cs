@@ -1,7 +1,5 @@
-
+using UnityEngine;
 using System;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
@@ -10,6 +8,7 @@ public class GameManager : Singleton<GameManager>
     {
         DataManager.Instance.SaveData();
         DataManager.Instance.SaveLastTime(DateTime.Now);
+        Debug.Log("Save");
     }
 
     public void LoadStartScene()
