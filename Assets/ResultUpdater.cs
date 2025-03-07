@@ -24,6 +24,8 @@ public class ResultUpdater : MonoBehaviour
 
     [SerializeField]
     private Button acceptButton;
+    [SerializeField]
+    private Button acceptX2Button;
 
     private float moveDistance;
     private float killZombieNum;
@@ -39,6 +41,7 @@ public class ResultUpdater : MonoBehaviour
 
     private Vector3 firstUIPos;
 
+
     private void Awake()
     {
         firstUIPos = transform.position;
@@ -50,7 +53,7 @@ public class ResultUpdater : MonoBehaviour
 
     public void UpdateResultValue(float firstPosZ, float lastPosZ, float _kill)
     {
-        moveDistance = (lastPosZ - firstPosZ)/10;
+        moveDistance = (lastPosZ - firstPosZ) / 10;
         killZombieNum = _kill;
         GameOver();
     }
@@ -82,7 +85,7 @@ public class ResultUpdater : MonoBehaviour
             if (killUIValue >= killZombieNum)
                 killUIValue = killZombieNum;
 
-            
+
 
             yield return null;
             distanceText.text = $"{distanceUIValue:F0}M";
@@ -126,18 +129,41 @@ public class ResultUpdater : MonoBehaviour
 
             yield return null;
         }
+
         //버튼 표시
         acceptButton.gameObject.SetActive(true);
+        acceptX2Button.gameObject.SetActive(true);
     }
+
 
     public void AcceptResult()
     {
-        acceptButton.gameObject.SetActive(false);
-        transform.position = firstUIPos;
-        DataManager.Instance.UpdateMoney(finalMoneyValue);
-        finalMoneyValue = 0;
-        moneyText.text = $"{finalMoneyValue}";
+        DeActivateButtons();
+        DataManager.Instance.GetMoneyData(finalMoneyValue);
+        DataManager.Instance.UpdateMoney();
+        ReturnUIOrigin();
         GameManager.Instance.LoadStartScene();
+    }
+
+    public void AcceptX2()
+    {
+        DeActivateButtons();
+        DataManager.Instance.GetMoneyData(finalMoneyValue);
+        AdsManager.Instance.rewardedAds.ShowAd();
+        ReturnUIOrigin();
+        GameManager.Instance.LoadStartScene();
+    }
+
+    private void ReturnUIOrigin()
+    {
+        transform.position = firstUIPos;
+        moneyText.text = "0";
+        finalMoneyValue = 0;
+    }
+    private void DeActivateButtons()
+    {
+        acceptButton.gameObject.SetActive(false);
+        acceptX2Button.gameObject.SetActive(false);
     }
 
 }

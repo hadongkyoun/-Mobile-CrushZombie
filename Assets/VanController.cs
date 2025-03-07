@@ -25,7 +25,6 @@ public class VanController : Subject
 
     private float dir;
     private float firstPosZ;
-    
 
     #region Property
     private float currentHP;
@@ -48,9 +47,6 @@ public class VanController : Subject
         rigidbody = GetComponent<Rigidbody>();
 
         vanUIUpdater = UIManager.Instance.transform.GetComponentInChildren<VanUIUpdater>();
-
-        
-
     }
 
     private void Start()

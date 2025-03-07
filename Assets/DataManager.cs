@@ -36,6 +36,9 @@ public class DataManager : Singleton<DataManager>
     private string fileName = "/save.txt";
     private string keyWord = "sadiqwjwkd#dkwda!! ej2kS@@";
 
+    private float moneyTemp;
+    public bool isRewarded;
+    
 
     private void Start()
     {
@@ -138,11 +141,22 @@ public class DataManager : Singleton<DataManager>
         SaveData();
     }
 
-    public void UpdateMoney(float _money)
+    public void UpdateMoney()
     {
-        playerData.money += (int)_money;
+        if (isRewarded)
+            playerData.money += (int)moneyTemp * 2;
+        else
+            playerData.money += (int)moneyTemp;
+
         UIManager.Instance.UpdateMoneyText(playerData.money);
         SaveData();
+
+        isRewarded = false;
+    }
+
+    public void GetMoneyData(float _money)
+    {
+        moneyTemp = _money;
     }
 
     public void SetVanData(VanData vanData)
