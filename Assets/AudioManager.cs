@@ -47,7 +47,8 @@ public class AudioManager : Singleton<AudioManager>
 
     public void PlaySFX(SFX sfxIndex)
     {
-        audioSfx.PlayOneShot(sfxs[(int)sfxIndex]);
+        if(audioSfx != null)
+            audioSfx.PlayOneShot(sfxs[(int)sfxIndex]);
     }
 
 

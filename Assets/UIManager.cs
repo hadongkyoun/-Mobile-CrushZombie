@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class UIManager : Singleton<UIManager>
 {
     [SerializeField]
+    private GameObject loadingSceneUI;
+    [SerializeField]
     private GameObject gameSceneUI;
     [SerializeField]
     private GameObject startSceneUI;
@@ -22,7 +24,7 @@ public class UIManager : Singleton<UIManager>
     private Text[] upgradeCarTexts;
     [SerializeField]
     private Text[] upgradeOfflineTexts;
-    
+
     [SerializeField]
     private Text money;
 
@@ -54,7 +56,7 @@ public class UIManager : Singleton<UIManager>
 
         if (init)
         {
-            if(clickAnimationHandlers[0] != null)
+            if (clickAnimationHandlers[0] != null)
                 clickAnimationHandlers[0].PlayAnim();
             AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_UPGRADE);
         }
@@ -79,7 +81,7 @@ public class UIManager : Singleton<UIManager>
 
         if (init)
         {
-            if(clickAnimationHandlers[2] != null)
+            if (clickAnimationHandlers[2] != null)
                 clickAnimationHandlers[2].PlayAnim();
             AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_UPGRADE);
         }
@@ -89,26 +91,46 @@ public class UIManager : Singleton<UIManager>
     public void LoadCurrentSceneUI(int currentSceneIndex)
     {
         if (currentSceneIndex == 0)
-            LoadStartSceneUI();
+            LoadLoadingSceneUI();
         else if (currentSceneIndex == 1)
+            LoadStartSceneUI();
+        else
             LoadGameSceneUI();
     }
 
     private void LoadStartSceneUI()
     {
+
+
         gameSceneUI.SetActive(false);
+        loadingSceneUI.SetActive(false);
         startSceneUI.SetActive(true);
 
         money.transform.parent.gameObject.SetActive(true);
+
+        UpdateMoneyText(DataManager.Instance.playerData.money);
+        UpdateBoosterSpeedLevelAndMoney(DataManager.Instance.playerData.lv_speed, DataManager.Instance.playerData.needUpgradeGold_speed);
+        UpdateCarHpLevelAndMoney(DataManager.Instance.playerData.lv_durability, DataManager.Instance.playerData.needUpgradeGold_durability);
+        UpdateOfflineRewardsLevelAndMoney(DataManager.Instance.playerData.lv_offline, DataManager.Instance.playerData.needUpgradeGold_offline);
     }
 
     private void LoadGameSceneUI()
     {
         AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_BUTTON);
         startSceneUI.SetActive(false);
+        loadingSceneUI.SetActive(false);
         gameSceneUI.SetActive(true);
         money.transform.parent.gameObject.SetActive(false);
-        
+
+    }
+
+    private void LoadLoadingSceneUI()
+    {
+
+        startSceneUI.SetActive(false);
+        gameSceneUI.SetActive(false);
+        loadingSceneUI.SetActive(true);
+        money.transform.parent.gameObject.SetActive(false);
     }
 
 }

@@ -4,20 +4,27 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
 
-    public void OnApplicationQuit()
+    public void OnApplicationFocus(bool focusStatus)
     {
-        DataManager.Instance.SaveData();
-        DataManager.Instance.SaveLastTime(DateTime.Now);
-        Debug.Log("Save");
+        if (focusStatus)
+        {
+            LoadLoadingScene();
+        }
+    }
+
+    public void LoadLoadingScene()
+    {
+        SceneManager.LoadScene("LoadingScene");
+        LoadUI(SceneManager.GetSceneByName("LoadingScene").buildIndex);
     }
 
     public void LoadStartScene()
     {
         DataManager.Instance.SaveData();
-       
+
         SceneManager.LoadScene("StartScene");
         LoadUI(SceneManager.GetSceneByName("StartScene").buildIndex);
-        
+
         AudioManager.Instance.PlayBGM(AudioManager.BGM.BGM_TITLE);
     }
 

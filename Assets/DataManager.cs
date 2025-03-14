@@ -1,6 +1,8 @@
 using System;
 using System.Data;
 using System.IO;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -22,7 +24,7 @@ public class PlayerDatas
     public float increaseMoneyOffline = 0f;
 
     public int money;
-    
+
     public DateTime lastPlayTime;
 }
 
@@ -38,49 +40,59 @@ public class DataManager : Singleton<DataManager>
 
     private float moneyTemp;
     public bool isRewarded;
-    
 
-    private void Start()
+
+
+
+    public void OnApplicationFocus(bool focusStatus)
     {
-        path = Application.persistentDataPath + fileName;
-        Debug.Log(path);
-        LoadData();
-
-
-        if (playerData.lastPlayTime != DateTime.MinValue)
+        if (!focusStatus)
         {
-            UpdateRewardMoney();
-            
+            playerData.lastPlayTime = DateTime.Now;
         }
+    }
+    public void OnApplicationQuit()
+    {
+        playerData.lastPlayTime = DateTime.Now;
     }
 
     public void UpdateRewardMoney()
     {
+        if (playerData.lastPlayTime == DateTime.MinValue)
+        {
+            return;
+        }
+
+
         TimeSpan elapsedTime = (DateTime.Now).Subtract(playerData.lastPlayTime);
         float calculateElapsedTime = (float)elapsedTime.TotalMinutes / 2;
         if (calculateElapsedTime > 0)
             playerData.money += (int)calculateElapsedTime;
-        UIManager.Instance.ActivateRewardPanel((int)calculateElapsedTime);
+
+        if((int)calculateElapsedTime > 0)
+            UIManager.Instance.ActivateRewardPanel((int)calculateElapsedTime);
     }
 
     public void SaveData()
     {
+        path = Application.persistentDataPath + fileName;
         string data = JsonUtility.ToJson(playerData);
         File.WriteAllText(path, EncryptAndDecrypt(data));
     }
 
-    public void LoadData()
+    public bool LoadData()
     {
+        path = Application.persistentDataPath + fileName;
+
         if (!File.Exists(path))
         {
             SaveData();
         }
         string data = File.ReadAllText(path);
         playerData = JsonUtility.FromJson<PlayerDatas>(EncryptAndDecrypt(data));
-        UIManager.Instance.UpdateMoneyText(playerData.money);
-        UIManager.Instance.UpdateBoosterSpeedLevelAndMoney(playerData.lv_speed, playerData.needUpgradeGold_speed);
-        UIManager.Instance.UpdateCarHpLevelAndMoney(playerData.lv_durability, playerData.needUpgradeGold_durability);
-        UIManager.Instance.UpdateOfflineRewardsLevelAndMoney(playerData.lv_offline, playerData.needUpgradeGold_offline);
+        UpdateRewardMoney();
+
+        return true;
     }
 
     private string EncryptAndDecrypt(string data)

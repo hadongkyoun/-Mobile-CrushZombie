@@ -131,6 +131,10 @@ public class SpawnManager : MonoBehaviour
                 // Zombie 클립 갯수를 Index가 같거나 넘은 경우는 오류임
                 if (zombieClips.Length >= randomIndex)
                 {
+                    
+                    animation.Stop();
+                    animation.Rewind();
+                    
                     animation.Play(zombieClips[randomIndex]);
                 }
                 else
