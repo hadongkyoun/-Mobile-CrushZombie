@@ -40,7 +40,7 @@ public class DataManager : Singleton<DataManager>
 
     private float moneyTemp;
     public bool isRewarded;
-
+    private int offlineRewardMoney;
 
 
 
@@ -51,9 +51,13 @@ public class DataManager : Singleton<DataManager>
             playerData.lastPlayTime = DateTime.Now;
         }
     }
-    public void OnApplicationQuit()
+
+    public void OnApplicationPause(bool pause)
     {
-        playerData.lastPlayTime = DateTime.Now;
+        if (pause)
+        {
+            playerData.lastPlayTime = DateTime.Now;
+        }
     }
 
     public void UpdateRewardMoney()
@@ -66,11 +70,8 @@ public class DataManager : Singleton<DataManager>
 
         TimeSpan elapsedTime = (DateTime.Now).Subtract(playerData.lastPlayTime);
         float calculateElapsedTime = (float)elapsedTime.TotalMinutes / 2;
-        if (calculateElapsedTime > 0)
-            playerData.money += (int)calculateElapsedTime;
-
-        if((int)calculateElapsedTime > 0)
-            UIManager.Instance.ActivateRewardPanel((int)calculateElapsedTime);
+        offlineRewardMoney = (int)calculateElapsedTime;
+        
     }
 
     public void SaveData()
@@ -78,6 +79,12 @@ public class DataManager : Singleton<DataManager>
         path = Application.persistentDataPath + fileName;
         string data = JsonUtility.ToJson(playerData);
         File.WriteAllText(path, EncryptAndDecrypt(data));
+
+        //if(offlineRewardMoney > 0)
+        //{
+            playerData.money += offlineRewardMoney;
+            UIManager.Instance.ActivateRewardPanel(offlineRewardMoney);
+        //}
     }
 
     public bool LoadData()

@@ -11,9 +11,16 @@ public class LoadingScript : MonoBehaviour
     [SerializeField]
     private Slider slider;
 
+    public void Init()
+    {
+        loading = true;
+        checkDataLoads = true;
+    }
+
     // Update is called once per frame
     void Update()
     {
+
         if (checkDataLoads)
         {
             slider.value = 0;
@@ -23,7 +30,7 @@ public class LoadingScript : MonoBehaviour
         if (loading)
         {
             slider.value += Time.deltaTime / 3.0f;
-            
+            Debug.Log("loading :" + loading);
         }
         else
         {

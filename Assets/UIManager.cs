@@ -130,6 +130,10 @@ public class UIManager : Singleton<UIManager>
         startSceneUI.SetActive(false);
         gameSceneUI.SetActive(false);
         loadingSceneUI.SetActive(true);
+        if(loadingSceneUI.TryGetComponent<LoadingScript>(out LoadingScript loadingScript))
+        {
+            loadingScript.Init();
+        }
         money.transform.parent.gameObject.SetActive(false);
     }
 

@@ -20,11 +20,11 @@ public class GameManager : Singleton<GameManager>
 
     public void LoadStartScene()
     {
-        DataManager.Instance.SaveData();
 
         SceneManager.LoadScene("StartScene");
         LoadUI(SceneManager.GetSceneByName("StartScene").buildIndex);
 
+        DataManager.Instance.SaveData();
         AudioManager.Instance.PlayBGM(AudioManager.BGM.BGM_TITLE);
     }
 
