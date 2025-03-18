@@ -7,9 +7,9 @@ public class VanData
 
     
 
-    private float straightSpeed = 40;
+    private float straightSpeed = 60;
     public float StraightSpeed { get { return straightSpeed; } }
-    private float straightMaximumSpeed = 140.0f;
+    private float straightMaximumSpeed = 160.0f;
     public float StraightMaximumSpeed { get { return straightMaximumSpeed; } }
     private float straightMinimumSpeed = 20.0f;
     public float StraightMinimumSpeed { get { return straightMinimumSpeed; } }
@@ -25,7 +25,7 @@ public class VanData
 
     private float moveSmoothValue = 0.05f;
     public float MoveSmoothValue {  get { return moveSmoothValue; } }
-    private float increaseValue = 2f;
+    private float increaseValue = 5f;
     public float IncreaseValue { get { return increaseValue; } }
     
 

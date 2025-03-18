@@ -1,0 +1,301 @@
+fileFormatVersion: 2
+guid: 21469a5090e709841b5b535f55d3ece8
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 1
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 2
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Hanging Idle
+      takeName: mixamo.com
+      internalID: -203655887218126122
+      firstFrame: 0
+      lastFrame: 70
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Body01
+        weight: 1
+      - path: Body01/Body02
+        weight: 1
+      - path: Body01/Body02/ArmLeft01
+        weight: 1
+      - path: Body01/Body02/ArmLeft01/ArmLeft02
+        weight: 1
+      - path: Body01/Body02/ArmLeft01/ArmLeft02/ArmLeft03
+        weight: 1
+      - path: Body01/Body02/ArmLeft01/ArmLeft02/ArmLeft03/ArmLeft04
+        weight: 1
+      - path: Body01/Body02/ArmRight01
+        weight: 1
+      - path: Body01/Body02/ArmRight01/ArmRight02
+        weight: 1
+      - path: Body01/Body02/ArmRight01/ArmRight02/ArmRight03
+        weight: 1
+      - path: Body01/Body02/ArmRight01/ArmRight02/ArmRight03/ArmRight04
+        weight: 1
+      - path: Body01/Body02/Body03
+        weight: 1
+      - path: Body01/Body02/Head01
+        weight: 1
+      - path: Body01/Body02/Head01/Head02
+        weight: 1
+      - path: Body01/LegLeft01
+        weight: 1
+      - path: Body01/LegLeft01/LegLeft02
+        weight: 1
+      - path: Body01/LegLeft01/LegLeft02/LegLeft03
+        weight: 1
+      - path: Body01/LegLeft01/LegLeft02/LegLeft03/LegLeft04
+        weight: 1
+      - path: Body01/LegRight01
+        weight: 1
+      - path: Body01/LegRight01/LegRight02
+        weight: 1
+      - path: Body01/LegRight01/LegRight02/LegRight03
+        weight: 1
+      - path: Body01/LegRight01/LegRight02/LegRight03/LegRight04
+        weight: 1
+      - path: Zombie
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: Zombie@Hanging Idle(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Zombie
+      parentName: Zombie@Hanging Idle(Clone)
+      position: {x: 0.00000038757324, y: 0.0006846966, z: -0.000000021633406}
+      rotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
+      scale: {x: 0.39370078, y: 0.39370078, z: 0.39370078}
+    - name: Body01
+      parentName: Zombie@Hanging Idle(Clone)
+      position: {x: -0.00005029387, y: 0.17430678, z: -0.0031477713}
+      rotation: {x: -0.0000024882397, y: 0.0000026238756, z: -0.7056505, w: 0.7085601}
+      scale: {x: 1, y: 1.0000001, z: 0.99999994}
+    - name: LegRight01
+      parentName: Body01
+      position: {x: 0.012169194, y: 0.021726662, z: 0.0044011}
+      rotation: {x: -0.00000028245677, y: -0.0000036351253, z: 0.99933237, w: -0.036536604}
+      scale: {x: 0.99999964, y: 0.9999998, z: 0.99999994}
+    - name: LegRight02
+      parentName: LegRight01
+      position: {x: -0.067387514, y: -0.000000003027916, z: -0.000000012111664}
+      rotation: {x: 0.00000020372694, y: -0.000000011641559, z: -0.000000059605604,
+        w: 1}
+      scale: {x: 1.0000001, y: 0.9999999, z: 1}
+    - name: LegRight03
+      parentName: LegRight02
+      position: {x: -0.08996172, y: -0.000000018167496, z: -0.000000004541874}
+      rotation: {x: 0.4843329, y: 0.51380616, z: -0.48109442, w: 0.5195894}
+      scale: {x: 1.0000001, y: 0.9999999, z: 1.0000004}
+    - name: LegRight04
+      parentName: LegRight03
+      position: {x: -0.07078687, y: -0.000000001513958, z: 0.00000003027916}
+      rotation: {x: -0, y: -0.000000059604638, z: -0.000000059604638, w: 1}
+      scale: {x: 0.99999964, y: 1, z: 0.9999998}
+    - name: Body02
+      parentName: Body01
+      position: {x: -0.03260902, y: -9.462237e-11, z: 0.000000001513958}
+      rotation: {x: 2.2737368e-13, y: -0.000000023283064, z: 6.4877817e-12, w: 1}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: Body03
+      parentName: Body02
+      position: {x: -0.036798503, y: -0.00000001797825, z: -0.000000004541874}
+      rotation: {x: -7.3990813e-13, y: 7.1054274e-15, z: 5.2573635e-27, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ArmRight01
+      parentName: Body02
+      position: {x: -0.042428225, y: 0.05070073, z: 0.004313206}
+      rotation: {x: -0.0000022949578, y: -0.0000022574811, z: 0.7167346, w: -0.6973461}
+      scale: {x: 0.99999976, y: 1.0000001, z: 1.0000001}
+    - name: ArmRight02
+      parentName: ArmRight01
+      position: {x: -0.05097099, y: 0.000000024223327, z: 0.000000022709369}
+      rotation: {x: 0.00000003492437, y: -0.00000008149095, z: 0.000000059599653,
+        w: 1}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1.0000002}
+    - name: ArmRight03
+      parentName: ArmRight02
+      position: {x: -0.05050047, y: 0.000000024223327, z: 0}
+      rotation: {x: 0.000000063300874, y: 0.0000000487489, z: 0.000000114552634, w: 1}
+      scale: {x: 0.9999999, y: 1.0000001, z: 1.0000002}
+    - name: ArmRight04
+      parentName: ArmRight03
+      position: {x: -0.07186378, y: 0.000000048446655, z: 0.000000033307074}
+      rotation: {x: 0.00000012587422, y: -7.2763173e-10, z: -9.314174e-10, w: 1}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
+    - name: Head01
+      parentName: Body02
+      position: {x: -0.06193946, y: 0.000918856, z: -0.000000024223327}
+      rotation: {x: 0.0000045929764, y: -0.00000021740479, z: 0.005188465, w: 0.9999865}
+      scale: {x: 0.9999998, y: 1, z: 1}
+    - name: Head02
+      parentName: Head01
+      position: {x: -0.077656984, y: 0.0000000098407265, z: 0.000000001513958}
+      rotation: {x: -7.536194e-13, y: 1.4210855e-14, z: 1.0709576e-26, w: 1}
+      scale: {x: 0.99999994, y: 0.99999994, z: 1}
+    - name: ArmLeft01
+      parentName: Body02
+      position: {x: -0.040773384, y: -0.05149727, z: 0.0043124547}
+      rotation: {x: 0.0000025934237, y: -0.0000025340594, z: 0.70971614, w: 0.7044878}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: ArmLeft02
+      parentName: ArmLeft01
+      position: {x: -0.05310472, y: -0.000000024223327, z: 0.000000024223327}
+      rotation: {x: -0.000000008731263, y: -1.1368684e-13, z: -0.000000029795734,
+        w: 1}
+      scale: {x: 1, y: 0.9999999, z: 1.0000005}
+    - name: ArmLeft03
+      parentName: ArmLeft02
+      position: {x: -0.05176813, y: 0, z: 0.000000024223327}
+      rotation: {x: 0.000000023230498, y: 0.000000013157315, z: -0.005989015, w: 0.9999821}
+      scale: {x: 1, y: 1.0000001, z: 0.9999999}
+    - name: ArmLeft04
+      parentName: ArmLeft03
+      position: {x: -0.065640226, y: -0.000000048446655, z: 0}
+      rotation: {x: -0.000000008731178, y: -2.220446e-16, z: 2.9103397e-11, w: 1}
+      scale: {x: 1.0000001, y: 0.9999997, z: 1.0000004}
+    - name: LegLeft01
+      parentName: Body01
+      position: {x: 0.011987653, y: -0.022384042, z: 0.0044007865}
+      rotation: {x: 0.000000030457386, y: -0.000003758819, z: 0.99910474, w: 0.042306364}
+      scale: {x: 0.9999997, y: 0.99999964, z: 1.0000001}
+    - name: LegLeft02
+      parentName: LegLeft01
+      position: {x: -0.06738753, y: 0.000000003027916, z: -0.000000012111664}
+      rotation: {x: 0.0000002040907, y: 0.0000000029104252, z: 1.08269533e-13, w: 1}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1}
+    - name: LegLeft03
+      parentName: LegLeft02
+      position: {x: -0.08996173, y: -0.000000021195412, z: -0.000000004541874}
+      rotation: {x: 0.48433274, y: 0.51380616, z: -0.48109448, w: 0.5195894}
+      scale: {x: 0.9999999, y: 1, z: 1}
+    - name: LegLeft04
+      parentName: LegLeft03
+      position: {x: -0.07078687, y: -0.000000001513958, z: 0.000000027251243}
+      rotation: {x: 0.00000008940696, y: -0.000000029802319, z: 0.000000029802319,
+        w: 1}
+      scale: {x: 1, y: 1.0000001, z: 1.0000002}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: Zombie
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 1
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

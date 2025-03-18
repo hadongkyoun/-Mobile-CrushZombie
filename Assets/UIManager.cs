@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class UIManager : Singleton<UIManager>
 {
     [SerializeField]
-    private GameObject loadingSceneUI;
-    [SerializeField]
     private GameObject gameSceneUI;
     [SerializeField]
     private GameObject startSceneUI;
@@ -91,10 +89,8 @@ public class UIManager : Singleton<UIManager>
     public void LoadCurrentSceneUI(int currentSceneIndex)
     {
         if (currentSceneIndex == 0)
-            LoadLoadingSceneUI();
-        else if (currentSceneIndex == 1)
             LoadStartSceneUI();
-        else
+        else if (currentSceneIndex == 1)
             LoadGameSceneUI();
     }
 
@@ -103,7 +99,7 @@ public class UIManager : Singleton<UIManager>
 
 
         gameSceneUI.SetActive(false);
-        loadingSceneUI.SetActive(false);
+        
         startSceneUI.SetActive(true);
 
         money.transform.parent.gameObject.SetActive(true);
@@ -118,23 +114,9 @@ public class UIManager : Singleton<UIManager>
     {
         AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_BUTTON);
         startSceneUI.SetActive(false);
-        loadingSceneUI.SetActive(false);
         gameSceneUI.SetActive(true);
         money.transform.parent.gameObject.SetActive(false);
 
-    }
-
-    private void LoadLoadingSceneUI()
-    {
-
-        startSceneUI.SetActive(false);
-        gameSceneUI.SetActive(false);
-        loadingSceneUI.SetActive(true);
-        if(loadingSceneUI.TryGetComponent<LoadingScript>(out LoadingScript loadingScript))
-        {
-            loadingScript.Init();
-        }
-        money.transform.parent.gameObject.SetActive(false);
     }
 
 }

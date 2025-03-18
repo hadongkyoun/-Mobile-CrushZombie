@@ -4,19 +4,13 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
 
-    public void OnApplicationFocus(bool focusStatus)
-    {
-        if (focusStatus)
-        {
-            LoadLoadingScene();
-        }
-    }
-
-    public void LoadLoadingScene()
-    {
-        SceneManager.LoadScene("LoadingScene");
-        LoadUI(SceneManager.GetSceneByName("LoadingScene").buildIndex);
-    }
+    //public void OnApplicationPause(bool pauseStatus)
+    //{
+    //    if (pauseStatus)
+    //    {
+    //        LoadStartScene();
+    //    }
+    //}
 
     public void LoadStartScene()
     {
@@ -31,9 +25,6 @@ public class GameManager : Singleton<GameManager>
     public void LoadGameScene()
     {
         UIManager.Instance.init = true;
-
-        DataManager.Instance.LoadData();
-
         SceneManager.LoadScene("GameScene");
         LoadUI(SceneManager.GetSceneByName("GameScene").buildIndex);
         AudioManager.Instance.PlayBGM(AudioManager.BGM.BGM_INGAME);

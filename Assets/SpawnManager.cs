@@ -59,7 +59,7 @@ public class SpawnManager : MonoBehaviour
     private void Update()
     {
         // Van이 파괴됐을때 스크립트 비활성화
-        if(vanController == null)
+        if (vanController == null)
         {
             Debug.Log("[ SpawnManager ] : Van is Destoryed");
             this.enabled = false;
@@ -84,7 +84,7 @@ public class SpawnManager : MonoBehaviour
             // 마지막 스폰 위치를 지나갔을때
             if (vanTransform != null && !finishSpawning && vanTransform.position.z > saveVanPosition.z + spawnOffSetZ)
             {
-                SpawnHordeJombies();
+                //SpawnHordeJombies();
                 // van에게 장애물 피하기가 끝났음을 알린다.
                 finishSpawn.Invoke();
                 finishSpawning = true;
@@ -93,70 +93,51 @@ public class SpawnManager : MonoBehaviour
     }
     public void Spawn()
     {
-        if (!spawnHordeJombies)
-        {
+        //if (!spawnHordeJombies)
+        //{
             // 스폰 할 오브젝트 ID
             id = ChooseSpawnID(Random.Range(0, 100));
-        }
-        // 라스트 스퍼트
-        else
-        {
-            // 좀비만 생성
-            id = 0;
-        }
+        //}
+        //// 라스트 스퍼트
+        //else
+        //{
+        //    // 좀비만 생성
+        //    id = 0;
+        //}
         // 오브젝트 활성화
-        GameObject obj = poolingManager.ActivateObstacle
-                                (id, SetObstaclePosition(), SetObstacleRotation());
-        // 좀비 애니메이션
-        if (obj != null && id == 0 && 
-            obj.TryGetComponent<Animation>(out Animation animation))
+        if (vanTransform.TryGetComponent<VanController>(out VanController vanController))
         {
-            obj.transform.LookAt(vanTransform.position);
-            // 0, 1 애니메이션 가져오기 ( 현재 애니메이션 클립 갯수 2 )
-            int randomIndex = Random.Range(0, animation.GetClipCount());
-
-            // 좀비 인스펙터에서 애니메이션 클립과 스크립트에서 세팅한 클립 갯수가 일치하지 않음
-            if (animation.GetClipCount() != zombieClips.Length)
+            if (vanController.HangNumFull == false)
             {
 
-                Debug.Log($"Error => zombieClips: {animation.GetClipCount()}, zombieClips.Length: {zombieClips.Length}");
-                // 좀비 Animation에 부착된 
-
-                return;
+                poolingManager.ActivateObstacle
+                                (id, SetObstaclePosition(), SetObstacleRotation());
+                if (id == 0 && !spawnHordeJombies)
+                {
+                    poolingManager.ActivateObstacle
+                                        (2, SetObstaclePosition(), SetObstacleRotation());
+                }
             }
 
             else
             {
-                // 클립 이름: Zombie1, Zombie2
-                // Zombie 클립 갯수를 Index가 같거나 넘은 경우는 오류임
-                if (zombieClips.Length >= randomIndex)
-                {
-                    
-                    animation.Stop();
-                    animation.Rewind();
-                    
-                    animation.Play(zombieClips[randomIndex]);
-                }
-                else
-                {
-                    Debug.Log("Index Out : zombieClips");
-                }
+                poolingManager.ActivateObstacle
+                                    (2, SetObstaclePosition(), SetObstacleRotation());
             }
-
         }
     }
 
     private int ChooseSpawnID(int randomIndex)
     {
-        if(randomIndex >= 0 && randomIndex <= 30)
+        if (randomIndex >= 0 && randomIndex <= 30)
         {
             return 0;
         }
-        else if(randomIndex <= 70)
+        else if (randomIndex <= 70)
         {
-            return 1;
+            return 0;
         }
-        else if(randomIndex <= 90)
+        else if (randomIndex <= 90)
         {
             return 2;
         }
@@ -174,47 +155,49 @@ public class SpawnManager : MonoBehaviour
 
     private Quaternion SetObstacleRotation()
     {
+        
+
         float randomY = Random.Range(0f, 360f);
         return Quaternion.Euler(0, randomY, 0);
 
     }
 
-    public void SpawnHordeJombies()
-    {
-        if (!spawnHordeJombies)
-        {
-            spawnHordeJombies = true;
-            StartCoroutine(SpawnHorde());
-        }
+    //public void SpawnHordeJombies()
+    //{
+    //    if (!spawnHordeJombies)
+    //    {
+    //        spawnHordeJombies = true;
+    //        StartCoroutine(SpawnHorde());
+    //    }
 
-    }
+    //}
 
-    IEnumerator SpawnHorde()
-    {
-        spawnTriggerDistance = 2.7f;
-        // Spawn X 값 수정
-        spawnOffSetX = 0.8f;
+    //IEnumerator SpawnHorde()
+    //{
+    //    spawnTriggerDistance = 2.7f;
+    //    // Spawn X 값 수정
+    //    spawnOffSetX = 0.8f;
 
-        yield return new WaitForSecondsRealtime(runningTimeToHorde);
+    //    yield return new WaitForSecondsRealtime(runningTimeToHorde);
 
 
-        // Van이 파괴되지 않는 한
-        while (vanTransform != null)
-        {
+    //    // Van이 파괴되지 않는 한
+    //    while (vanTransform != null)
+    //    {
 
-            if (vanTransform.position.z - saveVanPosition.z >= spawnTriggerDistance)
-            {
-                int spawnNum = Random.Range(3, 6);
+    //        if (vanTransform.position.z - saveVanPosition.z >= spawnTriggerDistance)
+    //        {
+    //            int spawnNum = Random.Range(3, 6);
 
-                for (int i = 0; i < spawnNum; i++)
-                {
-                    Spawn();
-                }
-                saveVanPosition = vanTransform.position;
-            }
-            yield return null;
-        }
-    }
+    //            for (int i = 0; i < spawnNum; i++)
+    //            {
+    //                Spawn();
+    //            }
+    //            saveVanPosition = vanTransform.position;
+    //        }
+    //        yield return null;
+    //    }
+    //}
 }
 
 

@@ -16,6 +16,8 @@ public class ObstacleManager : MonoBehaviour
 
 
     private Transform vanTransform;
+    public Transform VanTransform { get { return vanTransform; } }
+
     private float disappearOffSetZ = 5;
 
 
@@ -30,7 +32,7 @@ public class ObstacleManager : MonoBehaviour
     private void Update()
     {
         // 장애물로부터 플레이어가 일정거리 멀어지면
-        if (vanTransform != null && vanTransform.position.z - transform.position.z > disappearOffSetZ)
+        if (vanTransform != null && vanTransform.position.z - transform.position.z > disappearOffSetZ && obstacleData.Id != 0)
         {
             poolingManager.DeActivateObject(obstacleData.Id, this.gameObject);
         }
@@ -40,7 +42,7 @@ public class ObstacleManager : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // 장애물이 플레이어와 충돌
-        if (other.gameObject.CompareTag("Player"))
+        if (obstacleData.Id != 0 && other.gameObject.CompareTag("Player"))
         {
 
             if (other.TryGetComponent<VanController>(out VanController vanController))
@@ -53,9 +55,6 @@ public class ObstacleManager : MonoBehaviour
                 vanController.ObjectCollision(obstacleData);
                 switch (obstacleData.Id)
                 {
-                    case 0:
-                        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ZOMBIE);
-                        break;
                     case 1:
                         AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_TREE);
                         break;
@@ -72,6 +71,33 @@ public class ObstacleManager : MonoBehaviour
             }
 
 
+            // 충돌한 오브젝트는 비활성화
+            poolingManager.DeActivateObject(obstacleData.Id, this.gameObject);
+        }
+
+        else if (obstacleData.Id == 0 && (other.gameObject.CompareTag("Tree") || other.gameObject.CompareTag("Rock") || other.gameObject.CompareTag("Barrel")))
+        {
+            // 장애물에 맞는 이펙트 활성화
+            poolingManager.ActivateEffect(obstacleData.Id + 4, transform);
+            if(other.gameObject.transform.TryGetComponent<ObstacleManager>(out ObstacleManager obstacleManager))
+            {
+                poolingManager.ActivateEffect(obstacleManager.obstacleData.Id + 4, other.gameObject.transform);
+                switch (obstacleManager.obstacleData.Id)
+                {
+                    case 1:
+                        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_TREE);
+                        break;
+                    case 2:
+                        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ROCK);
+                        break;
+                    case 3:
+                        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_BARREL);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ZOMBIE);
             // 충돌한 오브젝트는 비활성화
             poolingManager.DeActivateObject(obstacleData.Id, this.gameObject);
         }

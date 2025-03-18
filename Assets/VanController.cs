@@ -37,6 +37,9 @@ public class VanController : Subject
     #endregion
 
 
+    private int zombieHangNum = 0;
+    private bool hangNumFull = false;
+    public bool HangNumFull { get { return hangNumFull; } }
 
 
     private void Awake()
@@ -98,6 +101,22 @@ public class VanController : Subject
         vanDrive.Drive(vanEngine.GetVanSpeed(), dir);
     }
 
+    public void zombieHangIncrease()
+    {
+        zombieHangNum++;
+        if(zombieHangNum == 4)
+        {
+            hangNumFull = true;
+        }
+    }
+    public void zombieHangDecrease()
+    {
+        zombieHangNum--;
+        if(zombieHangNum < 4)
+        {
+            hangNumFull = false;
+        }
+    }
 
     // 다른 오브젝트와 On Trigger로 부터 발동
     public void ObjectCollision(Obstacle obstacleData)

@@ -24,8 +24,7 @@ public class PlayerDatas
     public float increaseMoneyOffline = 0f;
 
     public int money;
-
-    public DateTime lastPlayTime;
+    public string lastPlayTime = "None";
 }
 
 
@@ -48,43 +47,56 @@ public class DataManager : Singleton<DataManager>
     {
         if (!focusStatus)
         {
-            playerData.lastPlayTime = DateTime.Now;
+            SaveData();
+            Debug.Log("Focus lost");
+        }
+        else
+        {
+            LoadData();
+            Debug.Log("Focus come");
         }
     }
 
-    public void OnApplicationPause(bool pause)
-    {
-        if (pause)
-        {
-            playerData.lastPlayTime = DateTime.Now;
-        }
-    }
+    //public void OnApplicationPause(bool pause)
+    //{
+    //    if (pause)
+    //    {
+    //        playerData.lastPlayTime = DateTime.Now;
+    //    }
+    //}
 
     public void UpdateRewardMoney()
     {
-        if (playerData.lastPlayTime == DateTime.MinValue)
+        if (String.Equals(playerData.lastPlayTime, "None"))
         {
+            Debug.Log("There is no last play time");
             return;
         }
 
-
-        TimeSpan elapsedTime = (DateTime.Now).Subtract(playerData.lastPlayTime);
+        DateTime lastPlayTime = DateTime.Parse(playerData.lastPlayTime);
+        TimeSpan elapsedTime = (DateTime.Now).Subtract(lastPlayTime);
         float calculateElapsedTime = (float)elapsedTime.TotalMinutes / 2;
+        Debug.Log(calculateElapsedTime);
         offlineRewardMoney = (int)calculateElapsedTime;
-        
+
+        if (offlineRewardMoney > 0)
+        {
+            playerData.money += offlineRewardMoney;
+            UIManager.Instance.ActivateRewardPanel(offlineRewardMoney);
+        }
     }
 
     public void SaveData()
     {
+        playerData.lastPlayTime = DateTime.Now.ToString("O");
+        Debug.Log(DateTime.Now);
+
         path = Application.persistentDataPath + fileName;
         string data = JsonUtility.ToJson(playerData);
         File.WriteAllText(path, EncryptAndDecrypt(data));
 
-        //if(offlineRewardMoney > 0)
-        //{
-            playerData.money += offlineRewardMoney;
-            UIManager.Instance.ActivateRewardPanel(offlineRewardMoney);
-        //}
+        Debug.Log("Save Success");
+
     }
 
     public bool LoadData()
@@ -97,7 +109,10 @@ public class DataManager : Singleton<DataManager>
         }
         string data = File.ReadAllText(path);
         playerData = JsonUtility.FromJson<PlayerDatas>(EncryptAndDecrypt(data));
+
         UpdateRewardMoney();
+        UIManager.Instance.UpdateMoneyText(playerData.money);
+        Debug.Log("LoadSuccess");
 
         return true;
     }
@@ -191,8 +206,4 @@ public class DataManager : Singleton<DataManager>
         vanData.boosterSpeedValue = playerData.boosterSpeedValue;
     }
 
-    public void SaveLastTime(DateTime lastTime)
-    {
-        playerData.lastPlayTime = lastTime;
-    }
 }
