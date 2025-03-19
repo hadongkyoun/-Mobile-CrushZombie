@@ -2,10 +2,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VanUIUpdater : Observer
+public class VanUIUpdater : MonoBehaviour
 {
 
-    private VanController vanController;
+    private VanEngine vanEngine;
     private ResultUpdater resultUpdater;
 
     [Space(3.0f)]
@@ -13,68 +13,62 @@ public class VanUIUpdater : Observer
     [SerializeField]
     private Image hpImage;
     [SerializeField]
-    private Text comboText;
-    [SerializeField]
     private Text speedText;
-    [SerializeField]
-    private Image boosterImage;
 
     [SerializeField]
     private Animation speedUp;
 
-    private void Start()
+    private bool sendResult = false;
+
+    private void Awake()
     {
+        Debug.Log("Awake 시작");
         resultUpdater = GetComponentInChildren<ResultUpdater>();
     }
 
-    public override void Notify(Subject subject)
+    private void Update()
     {
-        if (vanController == null && 
-            subject.TryGetComponent<VanController>(out VanController _vanController))
+        if (!GameManager.Instance.playerDead)
         {
-            vanController = _vanController;
-        }
-
-        // 콤보 업데이트
-        if (vanController.Combo > 0)
-        {
-            comboText.text = $"COMBO {vanController.Combo}";
-            if (comboText.gameObject.TryGetComponent<Animation>
-                (out Animation comboTextAnimation))
+            if (vanEngine == null)
             {
-                comboTextAnimation.Play();
+
+                if (GameObject.FindWithTag("Player").TryGetComponent<VanEngine>(out VanEngine _vanEngine))
+                    vanEngine = _vanEngine;
+                sendResult = false;
+            }
+            // 체력 UI 업데이트
+            hpImage.fillAmount = vanEngine.CurrentHP / vanEngine.MaxHP;
+
+            if (vanEngine.UpdateSpeedTrigger)
+            {
+                vanEngine.UpdateSpeedTrigger = false;
+                SpeedUpdate(vanEngine.VanStraightSpeed);
             }
         }
+
         else
         {
-            comboText.text = "";
+            if (!sendResult)
+            {
+                resultUpdater.UpdateResultValue();
+                sendResult = true;
+                Debug.Log("Send");
+            }
         }
-
-        // 체력 UI 업데이트
-        hpImage.fillAmount = vanController.CurrentHP;
-        boosterImage.fillAmount = vanController.BoosterAmount;
     }
 
-    public void SpeedUpdate(float vanBeforeSpeed, float vanStraightSpeed)
+
+    public void SpeedUpdate(float vanStraightSpeed)
     {
         speedText.text = $"{vanStraightSpeed:F0}KM";
     }
 
-    public void BoosterUpdate(float amount)
-    {
-        boosterImage.fillAmount = amount;
-    }
-
-    public void ComboSpeedUpEffect()
-    {
-        // 콤보로인해 스피드가 급증하는 경우
-        speedUp.Play();
-        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_UPGRADE);
-    }
-
-    public void SendResultInfo(float firstPosZ, float lastPosZ, float kill)
-    {
-        resultUpdater.UpdateResultValue(firstPosZ, lastPosZ, kill);
-    }
+    //public void ComboSpeedUpEffect()
+    //{
+    //    // 콤보로인해 스피드가 급증하는 경우
+    //    speedUp.Play();
+    //    AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_UPGRADE);
+    //}
 
 }

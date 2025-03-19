@@ -1,11 +1,15 @@
 
 using UnityEngine;
 
-public class VanDrive
+public class VanDrive : MonoBehaviour, IInputHandler
 {
 
+    [SerializeField]
+    private VanData vanData;
+
     private Rigidbody rigidbody;
-    private Transform transform;
+    [SerializeField]
+    private VanEngine vanEngine;
 
     private float vanMinSideSpeed;
     private float vanMaxSideSpeed;
@@ -18,78 +22,106 @@ public class VanDrive
     private Vector3 moveVector;
     private Vector3 refVelocity;
 
-    private bool playerDriving = true;
 
-    // 생성자로 초기화
-    public VanDrive(VanData _data, Rigidbody _rigidbody, Transform _transform)
+    private float dir = 0.0f;
+
+    private void Start()
     {
-        rigidbody = _rigidbody;
-        transform = _transform;
-        
-        vanMinSideSpeed = _data.SideMinimumSpeed;
-        vanMaxSideSpeed = _data.SideMaximumSpeed;
+        rigidbody = GetComponent<Rigidbody>();
 
-        vanStraightMaxSpeed = _data.StraightMaximumSpeed;
-        vanStraightMinSpeed = _data.StraightMinimumSpeed;
 
-        moveSmoothValue = _data.MoveSmoothValue;
+        vanMinSideSpeed = vanData.SideMinimumSpeed;
+        vanMaxSideSpeed = vanData.SideMaximumSpeed;
+
+        vanStraightMaxSpeed = vanData.StraightMaximumSpeed;
+        vanStraightMinSpeed = vanData.StraightMinimumSpeed;
+
+        moveSmoothValue = vanData.MoveSmoothValue;
     }
 
-    public void Drive(float vanStraightSpeed, float x)
+    private void Update()
     {
+        dir = SetDirection();
+    }
 
+    private void FixedUpdate()
+    {
+        Drive();
+    }
 
-        // 드라이빙 열림
-        if (playerDriving)
+    public void Drive()
+    {
+        if(vanEngine == null)
         {
-            float sideSpeed;
-            if(vanStraightSpeed <= 40.0f)
-            {
-                sideSpeed = vanMinSideSpeed;
-            }
-            else if(vanStraightSpeed < 130.0f)
-            {
-                sideSpeed = vanMinSideSpeed + (vanStraightSpeed - vanStraightMinSpeed) / (vanStraightMaxSpeed - vanStraightMinSpeed)
-                    * (vanMaxSideSpeed - vanMinSideSpeed);
-            }
+            Debug.Log("엔진ㅇ ㅗ류");
 
-            else
-            {
-                sideSpeed = vanMaxSideSpeed;
-            }
-
-            
-            moveVector = new Vector3(x * vanMinSideSpeed, 0, vanStraightSpeed / 4);
-
-            
-
-            LimitVanPosition();
-
-            // SmoothDamp에 대하여 제대로 학습
-            rigidbody.linearVelocity = Vector3.SmoothDamp(rigidbody.linearVelocity, moveVector, ref refVelocity, moveSmoothValue);
-            //}
 
         }
-        // 드라이빙 잠김
+        if (vanData == null)
+        {
+            Debug.Log("datㅁ 오ㅓ류");
+        }
+
+        float sideSpeed;
+        if (vanEngine.VanStraightSpeed <= vanStraightMinSpeed)
+        {
+            sideSpeed = vanMinSideSpeed;
+        }
+        else if (vanEngine.VanStraightSpeed < vanStraightMaxSpeed)
+        {
+            sideSpeed = vanMinSideSpeed + (vanEngine.VanStraightSpeed - vanStraightMinSpeed) / (vanStraightMaxSpeed - vanStraightMinSpeed)
+                * (vanMaxSideSpeed - vanMinSideSpeed);
+        }
+
         else
         {
-            rigidbody.linearVelocity = new Vector3(-transform.position.x, 0, vanStraightSpeed / 4);
+            sideSpeed = vanMaxSideSpeed;
         }
+
+
+        moveVector = new Vector3(dir * vanMinSideSpeed, 0, vanEngine.VanStraightSpeed / 4);
+
+
+
+        // SmoothDamp에 대하여 제대로 학습
+        rigidbody.linearVelocity = Vector3.SmoothDamp(rigidbody.linearVelocity, moveVector, ref refVelocity, moveSmoothValue);
+
+
+
+
+
 
         Quaternion targetRotation = Quaternion.LookRotation(rigidbody.linearVelocity);
         rigidbody.rotation = targetRotation;
     }
 
-    private void LimitVanPosition()
+    public float SetDirection()
     {
-        float currentX = transform.position.x;
-        currentX = Mathf.Clamp(currentX, -2.5f, 2.5f);
-        transform.position = new Vector3(currentX, transform.position.y, transform.position.z);
-    }
+        if (Application.isEditor)
+        {
+            dir = Input.GetAxis("Horizontal");
+        }
 
-    public void LimitPlayerDriving()
-    {
-        playerDriving = false;
-    }
+        else
+        {
+            if (Input.touchCount == 1)
+            {
+                Touch touch = Input.GetTouch(0);
+                if (touch.position.x < Screen.width / 2)
+                {
+                    dir = -1.0f;
+                }
+                else
+                {
+                    dir = 1.0f;
+                }
+            }
+            else
+            {
+                dir = 0.0f;
+            }
+        }
 
+        return dir;
+    }
 }

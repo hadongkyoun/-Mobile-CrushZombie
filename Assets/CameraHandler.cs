@@ -2,7 +2,7 @@ using Cinemachine;
 using System.Collections;
 using UnityEngine;
 
-public class CameraHandler : Observer
+public class CameraHandler : MonoBehaviour
 {
 
     [SerializeField]
@@ -25,7 +25,7 @@ public class CameraHandler : Observer
         perlin.m_AmplitudeGain = 0;
     }
 
-    public override void Notify(Subject subject)
+    public void Shake()
     {
         StartCoroutine(CameraShake());
     }

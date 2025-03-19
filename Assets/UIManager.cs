@@ -113,8 +113,8 @@ public class UIManager : Singleton<UIManager>
     private void LoadGameSceneUI()
     {
         AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_BUTTON);
-        startSceneUI.SetActive(false);
         gameSceneUI.SetActive(true);
+        startSceneUI.SetActive(false);
         money.transform.parent.gameObject.SetActive(false);
 
     }

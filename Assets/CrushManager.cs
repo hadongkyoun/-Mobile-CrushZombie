@@ -1,48 +1,44 @@
 using System;
-public class CrushManager
+using UnityEngine;
+public class CrushManager : MonoBehaviour
 {
-    private float engineHP;
-    private float currentHP;
+    [SerializeField]
+    private VanEngine vanEngine;
+    private CameraHandler cameraHandler;
+ 
 
     private float kill = 0;
+
+
     private int combo = 0;
     private bool lastSpurtActivate;
 
-    private event Action comboSpeedUp;
-
-    public CrushManager(VanData vanData, VanUIUpdater _vanUIUpdater)
+    private void Awake()
     {
-
-        engineHP = vanData.maxVanHP;
-        currentHP = engineHP;
-
-        comboSpeedUp += _vanUIUpdater.ComboSpeedUpEffect;
+        cameraHandler = Camera.main.transform.GetComponent<CameraHandler>();
     }
 
-    public void AffectVan(Obstacle obstacleData)
+    public void ObjectCollision(Obstacle obstacleData)
     {
-        if (obstacleData.Id == 0)
+
+        // 차의 속도와 부스터에 영향 
+        vanEngine.AffectEngineVelocity(obstacleData.DamageVelocity);
+        // 차의 내구도와 콤보에 영향
+        vanEngine.AffectEngineHP(obstacleData.DamageHp);
+
+        if(obstacleData.Id == 1)
         {
-            // 라스트 스퍼트 상황일때
-            if (lastSpurtActivate)
-            {
-                currentHP -= obstacleData.DamageHp;
-            }
+            GameManager.Instance.playerKill++;
         }
-        else
-        {
-            currentHP -= obstacleData.DamageHp;
-        }
-    }
 
-    public void LastSpurt()
-    {
-        lastSpurtActivate = true;
-    }
+        cameraHandler.Shake();
 
-    public float GetVanHP()
-    {
-        return currentHP;
+        //// 현재 정보 업데이트
+        //currentHP = crushManager.GetVanHP() / data.maxVanHP;
+        //boosterAmount = vanEngine.GetBoosterAmount();
+
+        //// UI 업데이트
+        //NotifyObservers();
     }
 
     public int UpdateCombo(Obstacle obstacleData)
@@ -67,25 +63,7 @@ public class CrushManager
     {
         return kill;
     }
-
-    public bool IsMultiplesOfFive()
-    {
-        if (lastSpurtActivate)
-        {
-            return false;
-        }
-
-        if (combo > 0 && combo % 5 == 0)
-        {
-            //Bust
-            comboSpeedUp.Invoke();
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+    
 
 
 }

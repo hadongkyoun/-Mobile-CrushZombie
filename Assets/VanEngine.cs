@@ -3,46 +3,66 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VanEngine
+public class VanEngine : MonoBehaviour
 {
 
-    private float vanStraightSpeed;
+    [SerializeField]
+    private VanData vanData;
+
+    [SerializeField]
+    private GameObject vanExplode;
+
     private float vanBeforeSpeed;
-    private float vanMaxSpeed;
+    private float vanStraightSpeed;
+    public float VanStraightSpeed { get { return vanStraightSpeed; } }
     private float vanMinSpeed;
 
     private float increaseValue;
-    private float firstIncreaseValue;
-    private float boosterSpeedValue;
+
+    private float engineHP;
+    public float MaxHP { get { return engineHP; } }
+    private float currentHP;
+    public float CurrentHP { get { return currentHP; } }
+
+    private bool updateSpeedTrigger;
+    public bool UpdateSpeedTrigger { get { return updateSpeedTrigger; } set { updateSpeedTrigger = value; } }
 
 
-    private bool activateBooster;
-    private bool lastSpurtActivate;
+    private float firstVanPosZ;
 
-    private float engineBoosterAmount;
-    private float beforeBoosterAmount;
-
-    private event Action<float, float> uiSpeedUpdate;
-    private event Action<float> uiBoosterUpdate;
-
-    public VanEngine(VanData vanData, VanUIUpdater _vanUIUpdater)
+    private int hangOnZombieNums = 0;
+    public int HangOnZombieNums { get { return hangOnZombieNums; } set { hangOnZombieNums = value; } }
+    private void Start()
     {
+        // 엔진 기능
         vanStraightSpeed = vanData.StraightSpeed;
-        vanMaxSpeed = vanData.StraightMaximumSpeed;
         vanMinSpeed = vanData.StraightMinimumSpeed;
-        vanBeforeSpeed = vanStraightSpeed;
         increaseValue = vanData.IncreaseValue;
-        firstIncreaseValue = increaseValue;
-        boosterSpeedValue = vanData.boosterSpeedValue;
 
-        uiSpeedUpdate += _vanUIUpdater.SpeedUpdate;
-        uiBoosterUpdate += _vanUIUpdater.BoosterUpdate;
+        // 엔진 내구도
+        engineHP = vanData.MaxVanHP;
+        currentHP = engineHP;
 
+        firstVanPosZ = transform.position.z;
+    }
+
+    private void Update()
+    {
+        RunningEngine();
+
+        if(hangOnZombieNums > 0)
+        {
+            currentHP -= Time.deltaTime / 3.0f;
+        }
+
+        if(currentHP < 0)
+        {
+            DestoryVan();
+        }
     }
 
     public void RunningEngine()
     {
-        Booster();
 
         vanStraightSpeed += Time.deltaTime * increaseValue;
 
@@ -51,109 +71,40 @@ public class VanEngine
         {
             vanStraightSpeed = 0f;
         }
-
-        if(!lastSpurtActivate && vanStraightSpeed > vanMaxSpeed)
-        {
-            vanStraightSpeed = vanMaxSpeed;
-        }
-
-
-            // UI 업데이트
+        // UI 업데이트
         if (Mathf.Abs(vanBeforeSpeed - vanStraightSpeed) >= 1.0f)
         {
-            uiSpeedUpdate?.Invoke(vanBeforeSpeed, vanStraightSpeed);
             vanBeforeSpeed = vanStraightSpeed;
+            updateSpeedTrigger = true;
         }
-
     }
 
-    public void AffectEngine(Obstacle obstacleData)
+    public void AffectEngineVelocity(float _damage)
     {
-        float damage = obstacleData.DamageVelocity;
+        float damage = _damage;
         if (damage <= 0.1f)
         {
             damage = 0.1f;
         }
 
-        if (obstacleData.Id == 0)
-        {
-            // 라스트 스퍼트 상황이 아닌 경우 좀비랑 부딪힐때 부스터 저장
-            if (!lastSpurtActivate)
-            {
-                engineBoosterAmount += 0.05f;
-            }
-            else
-            {
-                
-                vanStraightSpeed -= damage;
-                
-            }
-        }
-        else
-        {
-            if (engineBoosterAmount > 0)
-            {
-                engineBoosterAmount -= 0.1f;
-            }
-            else
-            {
-                engineBoosterAmount = 0f;
-            }
-
-            vanStraightSpeed -= damage;
-        }
-
+        vanStraightSpeed -= damage;
     }
 
-    public void ComboSpeedUP()
+    public void AffectEngineHP(float _damage)
     {
-        vanStraightSpeed += 3.5f;
+        currentHP -= _damage;
     }
 
-    public float GetVanSpeed()
+    private void DestoryVan()
     {
-        return vanStraightSpeed;
+        currentHP = 0;
+        Instantiate(vanExplode, transform.position, transform.rotation);
+        GameManager.Instance.playerMoveDistance = (transform.position.z - firstVanPosZ) / 10;
+        GameManager.Instance.playerDead = true;
+        Destroy(gameObject);
     }
 
 
 
-    private void Booster()
-    {
-        
-        if (activateBooster)
-        {
-            increaseValue = 10.0f + boosterSpeedValue;
-            engineBoosterAmount -= Time.deltaTime / 5.5f;
-            if (engineBoosterAmount <= 0.02f)
-            {
-                activateBooster = false;
-                engineBoosterAmount = 0;
-            }
-
-            uiBoosterUpdate.Invoke(engineBoosterAmount);
-        }
-        else
-        {
-            increaseValue = firstIncreaseValue;
-        }
-
-        if (beforeBoosterAmount != engineBoosterAmount)
-        {   
-
-            beforeBoosterAmount = engineBoosterAmount;
-        }
-
-    }
-    public float GetBoosterAmount()
-    {
-        return engineBoosterAmount;
-    }
-
-
-    public void LastSpurt()
-    {
-        activateBooster = true;
-        lastSpurtActivate = true;
-    }
 
 }

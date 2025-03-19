@@ -51,6 +51,7 @@ public class ObjectPoolingManager : MonoBehaviour
                 // 오브젝트 생성
                 GameObject obj = Instantiate(prefabs[id], pos, rot);
 
+
                 if (obj.TryGetComponent<ObstacleManager>(out ObstacleManager obstacleManager))
                 {
                     obstacleManager.Initialization(this);

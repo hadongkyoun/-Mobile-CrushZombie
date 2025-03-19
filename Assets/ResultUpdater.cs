@@ -51,11 +51,12 @@ public class ResultUpdater : MonoBehaviour
     }
 
 
-    public void UpdateResultValue(float firstPosZ, float lastPosZ, float _kill)
+    public void UpdateResultValue()
     {
-        moveDistance = (lastPosZ - firstPosZ) / 10;
-        killZombieNum = _kill;
+        moveDistance = GameManager.Instance.playerMoveDistance;
+        killZombieNum = GameManager.Instance.playerKill;
         GameOver();
+        Debug.Log("GameOver Panel Down");
     }
     public void GameOver()
     {
@@ -158,6 +159,7 @@ public class ResultUpdater : MonoBehaviour
         transform.position = firstUIPos;
         moneyText.text = "0";
         finalMoneyValue = 0;
+        animation.Rewind();
     }
     private void DeActivateButtons()
     {

@@ -32,9 +32,14 @@ public class ObstacleManager : MonoBehaviour
     private void Update()
     {
         // 장애물로부터 플레이어가 일정거리 멀어지면
-        if (vanTransform != null && vanTransform.position.z - transform.position.z > disappearOffSetZ && obstacleData.Id != 0)
+        if (vanTransform != null)
         {
+            if(vanTransform.position.z - transform.position.z > disappearOffSetZ && obstacleData.Id != 0)
             poolingManager.DeActivateObject(obstacleData.Id, this.gameObject);
+        }
+        else
+        {
+            this.enabled = false;
         }
     }
 
@@ -45,18 +50,18 @@ public class ObstacleManager : MonoBehaviour
         if (obstacleData.Id != 0 && other.gameObject.CompareTag("Player"))
         {
 
-            if (other.TryGetComponent<VanController>(out VanController vanController))
+            if (other.TryGetComponent<CrushManager>(out CrushManager crushManager))
             {
 
                 // 장애물에 맞는 이펙트 활성화
                 poolingManager.ActivateEffect(obstacleData.Id + 4, transform);
 
                 // 플레이어에게 영향
-                vanController.ObjectCollision(obstacleData);
+                crushManager.ObjectCollision(obstacleData);
                 switch (obstacleData.Id)
                 {
                     case 1:
-                        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_TREE);
+                        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ZOMBIE);
                         break;
                     case 2:
                         AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ROCK);
@@ -85,7 +90,7 @@ public class ObstacleManager : MonoBehaviour
                 switch (obstacleManager.obstacleData.Id)
                 {
                     case 1:
-                        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_TREE);
+                        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ZOMBIE);
                         break;
                     case 2:
                         AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ROCK);
@@ -97,9 +102,13 @@ public class ObstacleManager : MonoBehaviour
                         break;
                 }
             }
-            AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ZOMBIE);
+                AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ZOMBIE);
             // 충돌한 오브젝트는 비활성화
             poolingManager.DeActivateObject(obstacleData.Id, this.gameObject);
+            if (vanTransform != null && vanTransform.TryGetComponent<CrushManager>(out CrushManager crushManager))
+            {
+                crushManager.ObjectCollision(obstacleData);
+            }
         }
     }
 

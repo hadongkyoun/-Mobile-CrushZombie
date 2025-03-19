@@ -12,18 +12,26 @@ public class ZombieController : MonoBehaviour
     [SerializeField]
     private Animation animation;
 
+    [SerializeField]
+    private CapsuleCollider capsuleCollider;
+
     private bool hangOn = false;
+
+    private CameraHandler cameraHandler;
+
     private void Awake()
     {
-        if(vanTransform == null && TryGetComponent<ObstacleManager>(out ObstacleManager obstacleManager))
+        if (vanTransform == null && GameObject.FindWithTag("Player").TryGetComponent<Transform>(out Transform _vanTransform))
         {
-            vanTransform = obstacleManager.VanTransform;
+            this.vanTransform = _vanTransform;
         }
-        
+        cameraHandler = Camera.main.transform.GetComponent<CameraHandler>();
+
     }
 
     private void OnEnable()
     {
+        capsuleCollider.enabled = false;
 
         sign = Random.Range(-3, 3);
         if (sign <= 0)
@@ -35,13 +43,11 @@ public class ZombieController : MonoBehaviour
             sign = 1;
         }
 
-        offSetZ = Random.Range(0.3f, -0.4f);
+        offSetZ = Random.Range(0.4f, -0.45f);
         transform.position = new Vector3(vanTransform.position.x + sign * offSetX, 0, vanTransform.position.z + offSetZ);
-
-        // 좀비 수 증가
-        if (vanTransform.TryGetComponent<VanController>(out VanController vanController))
+        if (vanTransform.TryGetComponent<VanEngine>(out VanEngine vanEngine))
         {
-            vanController.zombieHangIncrease();
+            vanEngine.HangOnZombieNums++;
         }
     }
 
@@ -51,39 +57,46 @@ public class ZombieController : MonoBehaviour
         animation.Rewind();
         animation.Play("Jump To Freehang");
         hangOn = false;
-
-        // 좀비 수 감소
-        if (vanTransform.TryGetComponent<VanController>(out VanController vanController))
+        if (vanTransform.TryGetComponent<VanEngine>(out VanEngine vanEngine))
         {
-            vanController.zombieHangDecrease();
+            vanEngine.HangOnZombieNums--;
         }
+
+        GameManager.Instance.playerKill++;
+        cameraHandler.Shake();
     }
 
     // Update is called once per frame
     void Update()
     {
-;
-
-        if (Vector3.Distance(vanTransform.position, transform.position) > 1.25f)
+        if (vanTransform != null)
         {
-            transform.position = new Vector3(transform.position.x, vanTransform.position.y, vanTransform.position.z+ offSetZ);
-            dir = (vanTransform.position - transform.position).normalized;
-            transform.Translate(dir * speed * Time.deltaTime, Space.World);
+
+            if (Vector3.Distance(vanTransform.position, transform.position) > 1.25f)
+            {
+                transform.position = new Vector3(transform.position.x, vanTransform.position.y, vanTransform.position.z + offSetZ);
+                dir = (vanTransform.position - transform.position).normalized;
+                transform.Translate(dir * speed * Time.deltaTime, Space.World);
+            }
+            else
+            {
+                hangOn = true;
+            }
+
+            if (hangOn)
+            {
+                animation.Play("Hanging Idle");
+                transform.SetParent(vanTransform);
+                capsuleCollider.enabled = true;
+            }
+
+            Quaternion targetRotation = Quaternion.LookRotation(new Vector3(dir.x, 0, 0).normalized);
+            transform.rotation = targetRotation;
         }
         else
         {
-            hangOn = true;
+            this.enabled = false;
         }
-
-        if (hangOn)
-        {
-            animation.Play("Hanging Idle");
-            transform.SetParent(vanTransform);
-        }
-
-        Quaternion targetRotation = Quaternion.LookRotation(new Vector3(dir.x, 0, 0).normalized);
-        transform.rotation = targetRotation;
-
     }
 
 }

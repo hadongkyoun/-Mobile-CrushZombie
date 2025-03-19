@@ -1,8 +1,5 @@
 using System;
-using System.Data;
 using System.IO;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -25,6 +22,7 @@ public class PlayerDatas
 
     public int money;
     public string lastPlayTime = "None";
+
 }
 
 
@@ -53,6 +51,7 @@ public class DataManager : Singleton<DataManager>
         else
         {
             LoadData();
+            UpdateRewardMoney();
             Debug.Log("Focus come");
         }
     }
@@ -109,8 +108,6 @@ public class DataManager : Singleton<DataManager>
         }
         string data = File.ReadAllText(path);
         playerData = JsonUtility.FromJson<PlayerDatas>(EncryptAndDecrypt(data));
-
-        UpdateRewardMoney();
         UIManager.Instance.UpdateMoneyText(playerData.money);
         Debug.Log("LoadSuccess");
 
@@ -202,8 +199,7 @@ public class DataManager : Singleton<DataManager>
 
     public void SetVanData(VanData vanData)
     {
-        vanData.maxVanHP = playerData.maxVanHP;
-        vanData.boosterSpeedValue = playerData.boosterSpeedValue;
+        vanData.MaxVanHP = playerData.maxVanHP;
     }
 
 }
