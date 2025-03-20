@@ -16,8 +16,9 @@ public class PlayerDatas
     public int needUpgradeGold_offline = 100;
     public int lv_offline = 1;
 
+    // VanData �ʱⰪ
+    public float acceleration = 3.5f;
     public float maxVanHP = 20;
-    public float boosterSpeedValue = 0f;
     public float increaseMoneyOffline = 0f;
 
     public int money;
@@ -40,7 +41,6 @@ public class DataManager : Singleton<DataManager>
     private int offlineRewardMoney;
 
 
-
     public void OnApplicationFocus(bool focusStatus)
     {
         if (!focusStatus)
@@ -52,6 +52,7 @@ public class DataManager : Singleton<DataManager>
         {
             LoadData();
             UpdateRewardMoney();
+
             Debug.Log("Focus come");
         }
     }
@@ -108,7 +109,7 @@ public class DataManager : Singleton<DataManager>
         }
         string data = File.ReadAllText(path);
         playerData = JsonUtility.FromJson<PlayerDatas>(EncryptAndDecrypt(data));
-        UIManager.Instance.UpdateMoneyText(playerData.money);
+        UIManager.Instance.UpdateAllStartSceneUI();
         Debug.Log("LoadSuccess");
 
         return true;
@@ -126,21 +127,20 @@ public class DataManager : Singleton<DataManager>
     }
 
 
-    public void UpgradeBoosterSpeedData()
+    public void UpgradeSpeedData()
     {
         if (playerData.money < playerData.needUpgradeGold_speed)
             return;
         else
         {
-            playerData.boosterSpeedValue += 0.25f;
-
+            playerData.acceleration += 0.5f;
             playerData.money -= playerData.needUpgradeGold_speed;
             UIManager.Instance.UpdateMoneyText(playerData.money);
             playerData.needUpgradeGold_speed += 10;
             playerData.lv_speed++;
 
         }
-        UIManager.Instance.UpdateBoosterSpeedLevelAndMoney(playerData.lv_speed, playerData.needUpgradeGold_speed);
+        UIManager.Instance.UpdateSpeedLevelAndMoney(playerData.lv_speed, playerData.needUpgradeGold_speed);
 
         SaveData();
     }

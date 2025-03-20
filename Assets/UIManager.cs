@@ -1,5 +1,4 @@
 
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +16,7 @@ public class UIManager : Singleton<UIManager>
     [Tooltip("0 => Lv, 1 => need Gold")]
     [Space(20)]
     [SerializeField]
-    private Text[] upgradeBoosterTexts;
+    private Text[] upgradeTexts;
     [SerializeField]
     private Text[] upgradeCarTexts;
     [SerializeField]
@@ -47,10 +46,10 @@ public class UIManager : Singleton<UIManager>
         money.text = $"{_money}";
     }
 
-    public void UpdateBoosterSpeedLevelAndMoney(int lv, int needGold)
+    public void UpdateSpeedLevelAndMoney(int lv, int needGold)
     {
-        upgradeBoosterTexts[0].text = $"Lv {lv}";
-        upgradeBoosterTexts[1].text = $"{needGold}";
+        upgradeTexts[0].text = $"Lv {lv}";
+        upgradeTexts[1].text = $"{needGold}";
 
         if (init)
         {
@@ -99,13 +98,18 @@ public class UIManager : Singleton<UIManager>
 
 
         gameSceneUI.SetActive(false);
-        
+
         startSceneUI.SetActive(true);
 
         money.transform.parent.gameObject.SetActive(true);
 
+        UpdateAllStartSceneUI();
+    }
+
+    public void UpdateAllStartSceneUI()
+    {
         UpdateMoneyText(DataManager.Instance.playerData.money);
-        UpdateBoosterSpeedLevelAndMoney(DataManager.Instance.playerData.lv_speed, DataManager.Instance.playerData.needUpgradeGold_speed);
+        UpdateSpeedLevelAndMoney(DataManager.Instance.playerData.lv_speed, DataManager.Instance.playerData.needUpgradeGold_speed);
         UpdateCarHpLevelAndMoney(DataManager.Instance.playerData.lv_durability, DataManager.Instance.playerData.needUpgradeGold_durability);
         UpdateOfflineRewardsLevelAndMoney(DataManager.Instance.playerData.lv_offline, DataManager.Instance.playerData.needUpgradeGold_offline);
     }

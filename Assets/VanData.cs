@@ -1,13 +1,12 @@
-using System.Runtime.CompilerServices;
+
 using UnityEngine;
 
 public class VanData : MonoBehaviour
 {
 
-    private void Start()
+    private void Awake()
     {
         DataManager.Instance.SetVanData(this);
-        Debug.Log(maxVanHP);
     }
 
     private float straightSpeed = 50;
@@ -28,7 +27,7 @@ public class VanData : MonoBehaviour
 
     private float moveSmoothValue = 0.05f;
     public float MoveSmoothValue {  get { return moveSmoothValue; } }
-    private float increaseValue = 1f;
+    private float increaseValue = 3.5f;
     public float IncreaseValue { get { return increaseValue; } }
     
 

@@ -51,7 +51,7 @@ public class VanDrive : MonoBehaviour, IInputHandler
 
     public void Drive()
     {
-        if(vanEngine == null)
+        if (vanEngine == null)
         {
             Debug.Log("¿£Áø¤· ¤Ç·ù");
 
@@ -93,7 +93,18 @@ public class VanDrive : MonoBehaviour, IInputHandler
 
         Quaternion targetRotation = Quaternion.LookRotation(rigidbody.linearVelocity);
         rigidbody.rotation = targetRotation;
+
+        LimitVanPosition();
     }
+
+    private void LimitVanPosition()
+    {
+        float currentX = transform.position.x;
+        currentX = Mathf.Clamp(currentX, -2.5f, 2.5f);
+        transform.position = new Vector3(currentX, transform.position.y, transform.position.z);
+    }
+
+    private float targetDir = 0.0f;
 
     public float SetDirection()
     {
@@ -109,19 +120,19 @@ public class VanDrive : MonoBehaviour, IInputHandler
                 Touch touch = Input.GetTouch(0);
                 if (touch.position.x < Screen.width / 2)
                 {
-                    dir = -1.0f;
+                    targetDir = -1.0f;
                 }
                 else
                 {
-                    dir = 1.0f;
+                    targetDir = 1.0f;
                 }
             }
             else
             {
-                dir = 0.0f;
+                targetDir = 0.0f;
             }
         }
 
-        return dir;
+        return Mathf.MoveTowards(dir, targetDir, Time.deltaTime * 5.0f);
     }
 }

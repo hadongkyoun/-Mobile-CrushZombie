@@ -1,6 +1,4 @@
 
-
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObstacleManager : MonoBehaviour
@@ -34,8 +32,8 @@ public class ObstacleManager : MonoBehaviour
         // 장애물로부터 플레이어가 일정거리 멀어지면
         if (vanTransform != null)
         {
-            if(vanTransform.position.z - transform.position.z > disappearOffSetZ && obstacleData.Id != 0)
-            poolingManager.DeActivateObject(obstacleData.Id, this.gameObject);
+            if (vanTransform.position.z - transform.position.z > disappearOffSetZ && obstacleData.Id != 0)
+                poolingManager.DeActivateObject(obstacleData.Id, this.gameObject);
         }
         else
         {
@@ -43,11 +41,11 @@ public class ObstacleManager : MonoBehaviour
         }
     }
 
-    
+
     private void OnTriggerEnter(Collider other)
     {
         // 장애물이 플레이어와 충돌
-        if (obstacleData.Id != 0 && other.gameObject.CompareTag("Player"))
+        if (obstacleData.Id != 0 && obstacleData.Id != 1 && other.gameObject.CompareTag("Player"))
         {
 
             if (other.TryGetComponent<CrushManager>(out CrushManager crushManager))
@@ -60,9 +58,6 @@ public class ObstacleManager : MonoBehaviour
                 crushManager.ObjectCollision(obstacleData);
                 switch (obstacleData.Id)
                 {
-                    case 1:
-                        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ZOMBIE);
-                        break;
                     case 2:
                         AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ROCK);
                         break;
@@ -80,18 +75,15 @@ public class ObstacleManager : MonoBehaviour
             poolingManager.DeActivateObject(obstacleData.Id, this.gameObject);
         }
 
-        else if (obstacleData.Id == 0 && (other.gameObject.CompareTag("Tree") || other.gameObject.CompareTag("Rock") || other.gameObject.CompareTag("Barrel")))
+        else if (obstacleData.Id == 0 && (other.gameObject.CompareTag("Rock") || other.gameObject.CompareTag("Barrel")))
         {
             // 장애물에 맞는 이펙트 활성화
             poolingManager.ActivateEffect(obstacleData.Id + 4, transform);
-            if(other.gameObject.transform.TryGetComponent<ObstacleManager>(out ObstacleManager obstacleManager))
+            if (other.gameObject.transform.TryGetComponent<ObstacleManager>(out ObstacleManager obstacleManager))
             {
                 poolingManager.ActivateEffect(obstacleManager.obstacleData.Id + 4, other.gameObject.transform);
                 switch (obstacleManager.obstacleData.Id)
                 {
-                    case 1:
-                        AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ZOMBIE);
-                        break;
                     case 2:
                         AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ROCK);
                         break;
@@ -102,13 +94,29 @@ public class ObstacleManager : MonoBehaviour
                         break;
                 }
             }
-                AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ZOMBIE);
+            AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ZOMBIE);
             // 충돌한 오브젝트는 비활성화
             poolingManager.DeActivateObject(obstacleData.Id, this.gameObject);
             if (vanTransform != null && vanTransform.TryGetComponent<CrushManager>(out CrushManager crushManager))
             {
                 crushManager.ObjectCollision(obstacleData);
             }
+        }
+
+        else if (obstacleData.Id == 1 && other.gameObject.CompareTag("Player"))
+        {
+            if (other.TryGetComponent<CrushManager>(out CrushManager crushManager) && other.TryGetComponent<VanEngine>(out VanEngine vanEngine))
+            {
+                if(vanEngine.CurrentHP >= vanEngine.MaxHP)
+                {
+                    return;
+                }
+
+                crushManager.ObjectCollision(obstacleData);
+                poolingManager.DeActivateObject(obstacleData.Id, this.gameObject);
+
+            }
+
         }
     }
 

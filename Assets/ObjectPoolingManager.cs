@@ -14,14 +14,15 @@ public class ObjectPoolingManager : MonoBehaviour
     private Dictionary<int, Queue<GameObject>> QueueSet = new Dictionary<int, Queue<GameObject>>();
     #region QueueList
     private Queue<GameObject> jombies = new();
-    private Queue<GameObject> trees = new();
+    private Queue<GameObject> firstAidKits = new();
     private Queue<GameObject> rocks = new();
     private Queue<GameObject> barrels = new();
 
     private Queue<GameObject> jombieEffect = new();
-    private Queue<GameObject> treeEffect = new();
+    private Queue<GameObject> kitEffect = new();
     private Queue<GameObject> rockEffect = new();
     private Queue<GameObject> barrelEffect = new();
+
     #endregion
     private void Awake()
     {
@@ -29,13 +30,13 @@ public class ObjectPoolingManager : MonoBehaviour
         #region QueueSet Setting
         // Objects
         QueueSet.Add(0, jombies);
-        QueueSet.Add(1, trees);
+        QueueSet.Add(1, firstAidKits);
         QueueSet.Add(2, rocks);
         QueueSet.Add(3, barrels);
 
         // Effect
         QueueSet.Add(4, jombieEffect);
-        QueueSet.Add(5, treeEffect);
+        QueueSet.Add(5, kitEffect);
         QueueSet.Add(6, rockEffect);
         QueueSet.Add(7, barrelEffect);
         #endregion

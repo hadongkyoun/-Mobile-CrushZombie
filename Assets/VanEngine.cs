@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
+
 using UnityEngine;
-using UnityEngine.UI;
 
 public class VanEngine : MonoBehaviour
 {
@@ -41,6 +39,7 @@ public class VanEngine : MonoBehaviour
 
         // 엔진 내구도
         engineHP = vanData.MaxVanHP;
+        Debug.Log(engineHP);
         currentHP = engineHP;
 
         firstVanPosZ = transform.position.z;
@@ -93,6 +92,10 @@ public class VanEngine : MonoBehaviour
     public void AffectEngineHP(float _damage)
     {
         currentHP -= _damage;
+        if(currentHP >= engineHP)
+        {
+            currentHP = engineHP;
+        }
     }
 
     private void DestoryVan()

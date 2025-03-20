@@ -1,7 +1,5 @@
 
 
-using System.Collections;
-
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -86,22 +84,21 @@ public class ObstacleSpawnManager : MonoBehaviour
         // 스폰 할 오브젝트 ID
         id = ChooseSpawnID(Random.Range(0, 100));
 
-        poolingManager.ActivateObstacle
-                        (id, SetObstaclePosition(), SetObstacleRotation());
-
+        
+            poolingManager.ActivateObstacle
+                            (id, SetObstaclePosition(), SetObstacleRotation());
+        
 
     }
 
     private int ChooseSpawnID(int randomIndex)
     {
-        if (randomIndex >= 0 && randomIndex <= 15)
+        if (randomIndex >= 0 && randomIndex <= 5)
         {
-            // 치료제
             return 1;
         }
         else if (randomIndex <= 70)
         {
-            // 부서진 차로 변경
             return 2;
         }
         else if (randomIndex <= 90)

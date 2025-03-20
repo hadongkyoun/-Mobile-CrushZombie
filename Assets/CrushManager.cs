@@ -1,4 +1,4 @@
-using System;
+
 using UnityEngine;
 public class CrushManager : MonoBehaviour
 {
@@ -28,7 +28,8 @@ public class CrushManager : MonoBehaviour
 
         if(obstacleData.Id == 1)
         {
-            GameManager.Instance.playerKill++;
+            AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_UPGRADE);
+            return;
         }
 
         cameraHandler.Shake();

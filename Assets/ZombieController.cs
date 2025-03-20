@@ -72,7 +72,7 @@ public class ZombieController : MonoBehaviour
         if (vanTransform != null)
         {
 
-            if (Vector3.Distance(vanTransform.position, transform.position) > 1.25f)
+            if (Vector3.Distance(vanTransform.position, transform.position) > 1.05f)
             {
                 transform.position = new Vector3(transform.position.x, vanTransform.position.y, vanTransform.position.z + offSetZ);
                 dir = (vanTransform.position - transform.position).normalized;
