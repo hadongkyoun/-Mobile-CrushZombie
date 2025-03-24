@@ -30,6 +30,14 @@ public class UIManager : Singleton<UIManager>
 
     public bool init = false;
 
+    [SerializeField]
+    private Animation speedUpAnimation;
+
+    public void ActivateSpeedUpAnim()
+    {
+        speedUpAnimation.Play();
+    }
+
     public void ActivateRewardPanel(int _money)
     {
         offlineRewardUI.SetActive(true);

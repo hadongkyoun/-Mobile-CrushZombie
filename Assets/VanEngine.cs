@@ -81,10 +81,10 @@ public class VanEngine : MonoBehaviour
     public void AffectEngineVelocity(float _damage)
     {
         float damage = _damage;
-        if (damage <= 0.1f)
-        {
-            damage = 0.1f;
-        }
+        //if (damage <= 0.1f && damage >= 0.0f)
+        //{
+        //    damage = 0.1f;
+        //}
 
         vanStraightSpeed -= damage;
     }

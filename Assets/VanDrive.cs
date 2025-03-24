@@ -133,6 +133,6 @@ public class VanDrive : MonoBehaviour, IInputHandler
             }
         }
 
-        return Mathf.MoveTowards(dir, targetDir, Time.deltaTime * 5.0f);
+        return Mathf.MoveTowards(dir, targetDir, Time.deltaTime * 30.0f);
     }
 }

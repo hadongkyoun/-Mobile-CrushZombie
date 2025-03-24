@@ -59,14 +59,14 @@ public class ObstacleSpawnManager : MonoBehaviour
         }
 
 
-        
-            // 저장된 van 위치로부터 일정 거리 벗어나면
-            if (vanTransform != null && vanTransform.position.z >= spawnTriggerDistance + saveVanPosition.z)
-            {
-                saveVanPosition = vanTransform.position;
-                Spawn();
-            }
-        
+
+        // 저장된 van 위치로부터 일정 거리 벗어나면
+        if (vanTransform != null && vanTransform.position.z >= spawnTriggerDistance + saveVanPosition.z)
+        {
+            saveVanPosition = vanTransform.position;
+            Spawn();
+        }
+
         //else
         //{
         //    // 마지막 스폰 위치를 지나갔을때
@@ -84,31 +84,24 @@ public class ObstacleSpawnManager : MonoBehaviour
         // 스폰 할 오브젝트 ID
         id = ChooseSpawnID(Random.Range(0, 100));
 
-        
-            poolingManager.ActivateObstacle
-                            (id, SetObstaclePosition(), SetObstacleRotation());
-        
+
+        poolingManager.ActivateObstacle
+                        (id, SetObstaclePosition(), SetObstacleRotation());
+
 
     }
 
     private int ChooseSpawnID(int randomIndex)
     {
-        if (randomIndex >= 0 && randomIndex <= 5)
-        {
-            return 1;
-        }
-        else if (randomIndex <= 70)
-        {
-            return 2;
-        }
-        else if (randomIndex <= 90)
-        {
-            return 2;
-        }
+        float[] cumulativeWeights = { 0.04f, 0.71f, 1.0f }; // 누적 확률
+        float randomValue = Random.value; // 0.0 ~ 1.0 사이의 난수
+
+        if (randomValue < cumulativeWeights[0])
+            return 1; // 4% 확률
+        else if (randomValue < cumulativeWeights[1])
+            return 2; // 67% 확률
         else
-        {
-            return 3;
-        }
+            return 3; // 29% 확률
     }
     private Vector3 SetObstaclePosition()
     {

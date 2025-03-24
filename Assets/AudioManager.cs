@@ -21,6 +21,7 @@ public class AudioManager : Singleton<AudioManager>
         SFX_ROCK,
         SFX_UPGRADE,
         SFX_CARCRASH,
+        SFX_MULTIPLEKILL,
     }
 
 
@@ -47,8 +48,10 @@ public class AudioManager : Singleton<AudioManager>
 
     public void PlaySFX(SFX sfxIndex)
     {
-        if(audioSfx != null)
+        if (audioSfx != null)
+        {
             audioSfx.PlayOneShot(sfxs[(int)sfxIndex]);
+        }
     }
 
 

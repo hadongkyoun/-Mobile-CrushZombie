@@ -67,7 +67,7 @@ public class ObstacleManager : MonoBehaviour
                     default:
                         break;
                 }
-
+                Debug.Log("Collision");
             }
 
 
@@ -86,9 +86,11 @@ public class ObstacleManager : MonoBehaviour
                 {
                     case 2:
                         AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ROCK);
+                        poolingManager.DeActivateObject(obstacleData.Id, this.gameObject);
                         break;
                     case 3:
                         AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_BARREL);
+                        poolingManager.DeActivateObject(obstacleData.Id, this.gameObject);
                         break;
                     default:
                         break;
@@ -96,11 +98,15 @@ public class ObstacleManager : MonoBehaviour
             }
             AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ZOMBIE);
             // 충돌한 오브젝트는 비활성화
-            poolingManager.DeActivateObject(obstacleData.Id, this.gameObject);
             if (vanTransform != null && vanTransform.TryGetComponent<CrushManager>(out CrushManager crushManager))
             {
                 crushManager.ObjectCollision(obstacleData);
             }
+
+        }
+        else if(obstacleData.Id == 0 && other.gameObject.CompareTag("Explosion"))
+        {
+            poolingManager.DeActivateObject(obstacleData.Id, this.gameObject);
         }
 
         else if (obstacleData.Id == 1 && other.gameObject.CompareTag("Player"))

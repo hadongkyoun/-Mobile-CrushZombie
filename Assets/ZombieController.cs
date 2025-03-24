@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class ZombieController : MonoBehaviour
@@ -81,12 +82,24 @@ public class ZombieController : MonoBehaviour
             else
             {
                 hangOn = true;
+                
             }
 
             if (hangOn)
             {
                 animation.Play("Hanging Idle");
                 transform.SetParent(vanTransform);
+                if (transform.localPosition.x > -0.5f && transform.localPosition.x < 0.5f)
+                {
+                    if (transform.localPosition.x < 0)
+                    {
+                        transform.localPosition = new Vector3(-0.5f, transform.localPosition.y, transform.localPosition.z);
+                    }
+                    else
+                    {
+                        transform.localPosition = new Vector3(0.5f, transform.localPosition.y, transform.localPosition.z);
+                    }
+                }
                 capsuleCollider.enabled = true;
             }
 
@@ -98,5 +111,4 @@ public class ZombieController : MonoBehaviour
             this.enabled = false;
         }
     }
-
 }

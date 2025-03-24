@@ -12,7 +12,6 @@ public class ZombieSpawnManager : MonoBehaviour
     private int zombieHangNumMaximum;
 
 
-
     [SerializeField]
     private float zombieMinSpawnTime = 4.5f;
     [SerializeField]
