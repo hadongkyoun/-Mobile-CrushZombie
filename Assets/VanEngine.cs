@@ -1,4 +1,6 @@
 
+using Cinemachine;
+using System.Collections;
 using UnityEngine;
 
 public class VanEngine : MonoBehaviour
@@ -9,6 +11,10 @@ public class VanEngine : MonoBehaviour
 
     [SerializeField]
     private GameObject vanExplode;
+
+    [SerializeField]
+    private CinemachineVirtualCamera virtualCamera;
+    private CinemachineFramingTransposer transposer;
 
     private float vanBeforeSpeed;
     private float vanStraightSpeed;
@@ -32,6 +38,8 @@ public class VanEngine : MonoBehaviour
     public int HangOnZombieNums { get { return hangOnZombieNums; } set { hangOnZombieNums = value; } }
     private void Start()
     {
+        transposer = virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+
         // 엔진 기능
         vanStraightSpeed = vanData.StraightSpeed;
         vanMinSpeed = vanData.StraightMinimumSpeed;
@@ -60,10 +68,23 @@ public class VanEngine : MonoBehaviour
         }
     }
 
+    public void SpeedUp()
+    {
+        transposer.m_ZDamping = 2.5f;
+        vanStraightSpeed += 10.0f;
+        StartCoroutine(originZDamping());
+    }
+
+    IEnumerator originZDamping()
+    {
+        yield return new WaitForSeconds(0.5f);
+        transposer.m_ZDamping = 1.0f;
+    }
+
     public void RunningEngine()
     {
 
-        vanStraightSpeed += Time.deltaTime * increaseValue;
+        //vanStraightSpeed += Time.deltaTime * increaseValue;
 
         // 밴의 속도가 현저히 느려지는 경우
         if (vanStraightSpeed <= vanMinSpeed)
@@ -71,7 +92,7 @@ public class VanEngine : MonoBehaviour
             vanStraightSpeed = 0f;
         }
         // UI 업데이트
-        if (Mathf.Abs(vanBeforeSpeed - vanStraightSpeed) >= 1.0f)
+        if (Mathf.Abs(vanBeforeSpeed - vanStraightSpeed) >= 2.0f)
         {
             vanBeforeSpeed = vanStraightSpeed;
             updateSpeedTrigger = true;
@@ -102,7 +123,7 @@ public class VanEngine : MonoBehaviour
     {
         currentHP = 0;
         Instantiate(vanExplode, transform.position, transform.rotation);
-        GameManager.Instance.playerMoveDistance = (transform.position.z - firstVanPosZ) / 10;
+        GameManager.Instance.playerMoveDistance = (transform.position.z - firstVanPosZ) / 50;
         GameManager.Instance.playerDead = true;
         Destroy(gameObject);
     }

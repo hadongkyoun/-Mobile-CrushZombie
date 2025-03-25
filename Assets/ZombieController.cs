@@ -89,7 +89,7 @@ public class ZombieController : MonoBehaviour
             {
                 animation.Play("Hanging Idle");
                 transform.SetParent(vanTransform);
-                if (transform.localPosition.x > -0.5f && transform.localPosition.x < 0.5f)
+                if (transform.localPosition.x > -0.43f && transform.localPosition.x < 0.43f)
                 {
                     if (transform.localPosition.x < 0)
                     {

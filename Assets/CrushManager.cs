@@ -26,19 +26,6 @@ public class CrushManager : MonoBehaviour
         cameraHandler = Camera.main.transform.GetComponent<CameraHandler>();
     }
 
-    private void Update()
-    {
-        if (startCount)
-        {
-            waitNextCurrentKillTime += Time.deltaTime;
-        }
-
-        if(waitNextCurrentKillTime > waitNextKillTime)
-        {
-            startCount = false;
-            waitNextCurrentKillTime = 0.0f;
-        }
-    }
     IEnumerator turnStartFalse()
     {
         yield return new WaitForSeconds(0.2f);
@@ -53,7 +40,7 @@ public class CrushManager : MonoBehaviour
         // 차의 내구도와 콤보에 영향
         vanEngine.AffectEngineHP(obstacleData.DamageHp);
 
-        if(obstacleData.Id == 1)
+        if (obstacleData.Id == 1)
         {
             AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_UPGRADE);
 
@@ -62,21 +49,25 @@ public class CrushManager : MonoBehaviour
 
         if (obstacleData.Id == 0)
         {
-            if (startCount == true && !multiKillReset)
+            
+            if (!multiKillReset)
             {
                 multiKillReset = true;
-                // 콤보 UI&SOUND 실행
-                AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_MULTIPLEKILL);
+                vanEngine.SpeedUp();
+                if(Random.Range(0,10) %2 == 0)
+                {
+                AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_SPEEDUP);
+
+                }
+                else
+                {
+                    AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_KEEPGOING);
+                }
                 UIManager.Instance.ActivateSpeedUpAnim();
-                vanEngine.AffectEngineVelocity(-5.0f);
                 StartCoroutine(turnStartFalse());
             }
-            else
-            {
-                startCount = true;
-            }
         }
-        if(obstacleData.Id == 3)
+        if (obstacleData.Id == 3)
         {
             if (vanEngine.HangOnZombieNums > 1)
             {

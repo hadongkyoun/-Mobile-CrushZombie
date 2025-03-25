@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class VanDrive : MonoBehaviour, IInputHandler
 {
@@ -104,13 +105,12 @@ public class VanDrive : MonoBehaviour, IInputHandler
         transform.position = new Vector3(currentX, transform.position.y, transform.position.z);
     }
 
-    private float targetDir = 0.0f;
-
     public float SetDirection()
     {
         if (Application.isEditor)
         {
-            dir = Input.GetAxis("Horizontal");
+            dir = Input.GetAxisRaw("Horizontal");
+
         }
 
         else
@@ -120,19 +120,19 @@ public class VanDrive : MonoBehaviour, IInputHandler
                 Touch touch = Input.GetTouch(0);
                 if (touch.position.x < Screen.width / 2)
                 {
-                    targetDir = -1.0f;
+                    dir = -1.0f;
                 }
                 else
                 {
-                    targetDir = 1.0f;
+                    dir = 1.0f;
                 }
             }
             else
             {
-                targetDir = 0.0f;
+                dir = 0.0f;
             }
         }
 
-        return Mathf.MoveTowards(dir, targetDir, Time.deltaTime * 30.0f);
+        return dir;
     }
 }

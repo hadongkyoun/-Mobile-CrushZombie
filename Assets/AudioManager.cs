@@ -22,6 +22,8 @@ public class AudioManager : Singleton<AudioManager>
         SFX_UPGRADE,
         SFX_CARCRASH,
         SFX_MULTIPLEKILL,
+        SFX_SPEEDUP,
+        SFX_KEEPGOING,
     }
 
 

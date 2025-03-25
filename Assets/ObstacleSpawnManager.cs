@@ -1,5 +1,6 @@
 
 
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,6 +26,9 @@ public class ObstacleSpawnManager : MonoBehaviour
     private float obstacleSpawnTime = 3.0f;
 
     private float currentTime = 0.0f;
+
+    [SerializeField]
+    private CinemachineBrain cinemachineBrain;
 
     //[SerializeField] 애니메이션 클립이 추가 되는 경우 수정
     private string[] zombieClips = { "Zombie1", "Zombie2" };
@@ -58,7 +62,13 @@ public class ObstacleSpawnManager : MonoBehaviour
             return;
         }
 
+        currentTime += Time.deltaTime;
 
+        if (currentTime > obstacleSpawnTime)
+        {
+            cinemachineBrain.enabled = false;
+            return;
+        }
 
         // 저장된 van 위치로부터 일정 거리 벗어나면
         if (vanTransform != null && vanTransform.position.z >= spawnTriggerDistance + saveVanPosition.z)
