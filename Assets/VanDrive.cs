@@ -1,6 +1,5 @@
 
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 
 public class VanDrive : MonoBehaviour, IInputHandler
 {
@@ -52,6 +51,16 @@ public class VanDrive : MonoBehaviour, IInputHandler
 
     public void Drive()
     {
+        if (GameManager.Instance.playerDead)
+        {
+            if(TryGetComponent<BoxCollider>(out BoxCollider collider))
+            {
+                collider.enabled = false;
+            }
+            return;
+        }
+
+
         if (vanEngine == null)
         {
             Debug.Log("¿£Áø¤· ¤Ç·ù");

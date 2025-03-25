@@ -3,6 +3,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
 
+    [SerializeField]
+    private float playTime = 90;
+    public float GetPlayTime { get { return playTime; } set { playTime = value; } }
+
     public float playerKill;
     public float playerMoveDistance;
 
@@ -11,6 +15,12 @@ public class GameManager : Singleton<GameManager>
     public void Start()
     {
         Application.targetFrameRate = 60;
+    }
+
+    public void Update()
+    {
+        playTime -= Time.deltaTime;
+        UIManager.Instance.UpdatePlayTime(playTime);
     }
 
 

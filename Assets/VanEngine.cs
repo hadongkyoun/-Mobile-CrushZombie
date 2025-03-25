@@ -90,6 +90,7 @@ public class VanEngine : MonoBehaviour
         if (vanStraightSpeed <= vanMinSpeed)
         {
             vanStraightSpeed = 0f;
+            DestoryVan();
         }
         // UI 업데이트
         if (Mathf.Abs(vanBeforeSpeed - vanStraightSpeed) >= 2.0f)
@@ -102,11 +103,6 @@ public class VanEngine : MonoBehaviour
     public void AffectEngineVelocity(float _damage)
     {
         float damage = _damage;
-        //if (damage <= 0.1f && damage >= 0.0f)
-        //{
-        //    damage = 0.1f;
-        //}
-
         vanStraightSpeed -= damage;
     }
 
@@ -125,7 +121,7 @@ public class VanEngine : MonoBehaviour
         Instantiate(vanExplode, transform.position, transform.rotation);
         GameManager.Instance.playerMoveDistance = (transform.position.z - firstVanPosZ) / 50;
         GameManager.Instance.playerDead = true;
-        Destroy(gameObject);
+        this.gameObject.SetActive(false);
     }
 
 

@@ -14,11 +14,6 @@ public class CrushManager : MonoBehaviour
     private int combo = 0;
     private bool lastSpurtActivate;
 
-    [SerializeField]
-    private float waitNextKillTime = 0.01f;
-    private float waitNextCurrentKillTime = 0.0f;
-
-    private bool startCount = false;
     private bool multiKillReset = false;
 
     private void Awake()
@@ -28,12 +23,41 @@ public class CrushManager : MonoBehaviour
 
     IEnumerator turnStartFalse()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         multiKillReset = false;
     }
 
+
     public void ObjectCollision(Obstacle obstacleData)
     {
+
+        if (obstacleData.Id == 0)
+        {
+            
+            if (!multiKillReset)
+            {
+                multiKillReset = true;
+                combo++;
+                UIManager.Instance.UpdateComboText(combo);
+
+                StartCoroutine(turnStartFalse());
+            }
+            else
+            {
+                GameManager.Instance.GetPlayTime += 10.0f;
+                AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_KEEPGOING);
+            }
+
+            if (combo > 0 && combo % 5 == 0)
+            {
+                vanEngine.SpeedUp();
+                AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_SPEEDUP);
+                UIManager.Instance.ActivateSpeedUpAnim();
+            }
+
+
+            return;
+        }
 
         // 차의 속도와 부스터에 영향 
         vanEngine.AffectEngineVelocity(obstacleData.DamageVelocity);
@@ -43,39 +67,26 @@ public class CrushManager : MonoBehaviour
         if (obstacleData.Id == 1)
         {
             AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_UPGRADE);
-
+            // 차의 내구도와 콤보에 영향
+            vanEngine.AffectEngineHP(obstacleData.DamageHp);
             return;
         }
 
-        if (obstacleData.Id == 0)
-        {
-            
-            if (!multiKillReset)
-            {
-                multiKillReset = true;
-                vanEngine.SpeedUp();
-                if(Random.Range(0,10) %2 == 0)
-                {
-                AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_SPEEDUP);
-
-                }
-                else
-                {
-                    AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_KEEPGOING);
-                }
-                UIManager.Instance.ActivateSpeedUpAnim();
-                StartCoroutine(turnStartFalse());
-            }
-        }
+        
         if (obstacleData.Id == 3)
         {
             if (vanEngine.HangOnZombieNums > 1)
             {
                 // 좀비 소리 추가
-                //AudioManager.Instance.PlaySFX()
+                AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_ZOMBIE);
             }
+            combo = 0;
         }
-
+        if(obstacleData.Id == 2)
+        {
+            combo = 0;
+        }
+        UIManager.Instance.ResetComboText();
         cameraHandler.Shake();
 
         //// 현재 정보 업데이트

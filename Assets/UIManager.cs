@@ -33,6 +33,30 @@ public class UIManager : Singleton<UIManager>
     [SerializeField]
     private Animation speedUpAnimation;
 
+    [SerializeField]
+    private Text time;
+
+    [SerializeField]
+    private Text comboText;
+
+    public void UpdatePlayTime(float playTimeSecond)
+    {
+        time.text = $"{playTimeSecond:F0}";
+    }
+
+    public void ResetComboText()
+    {
+        comboText.text = "";
+    }
+    public void UpdateComboText(int combo)
+    {
+        comboText.text = $"Combo {combo}";
+        if(comboText.TryGetComponent<Animation>(out Animation animation))
+        {
+            animation.Play();
+        }
+    }
+
     public void ActivateSpeedUpAnim()
     {
         speedUpAnimation.Play();

@@ -20,12 +20,9 @@ public class ObstacleSpawnManager : MonoBehaviour
     [SerializeField]
     private float spawnOffSetX = 2.85f;
 
-    [Tooltip("게임 스폰하는 시간 ")]
-
-    [SerializeField]
-    private float obstacleSpawnTime = 3.0f;
-
     private float currentTime = 0.0f;
+
+    private float obstacleSpawnTime;
 
     [SerializeField]
     private CinemachineBrain cinemachineBrain;
@@ -50,6 +47,8 @@ public class ObstacleSpawnManager : MonoBehaviour
     {
         vanTransform = vanTransform.transform;
         saveVanPosition = vanTransform.position;
+
+        obstacleSpawnTime = GameManager.Instance.GetPlayTime;
     }
 
     private void Update()

@@ -14,10 +14,6 @@ public class VanUIUpdater : MonoBehaviour
     private Image hpImage;
     [SerializeField]
     private Text speedText;
-    [SerializeField]
-    private Text time;
-    [SerializeField]
-    private float playTimeSecond = 60.0f;
 
     [SerializeField]
     private Animation speedUp;
@@ -34,8 +30,7 @@ public class VanUIUpdater : MonoBehaviour
     {
         if (!GameManager.Instance.playerDead)
         {
-            time.text = $"{playTimeSecond:F0}";
-            playTimeSecond -= Time.deltaTime;
+            
 
             if (vanEngine == null)
             {
@@ -60,8 +55,6 @@ public class VanUIUpdater : MonoBehaviour
             {
                 resultUpdater.UpdateResultValue();
                 sendResult = true;
-                playTimeSecond = 60.0f;
-                
                 Debug.Log("Send");
             }
         }
