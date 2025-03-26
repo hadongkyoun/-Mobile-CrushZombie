@@ -20,7 +20,6 @@ public class GameManager : Singleton<GameManager>
     public void Update()
     {
         playTime -= Time.deltaTime;
-        UIManager.Instance.UpdatePlayTime(playTime);
     }
 
 
@@ -30,7 +29,6 @@ public class GameManager : Singleton<GameManager>
         playerMoveDistance = 0;
         playerDead = false;
         SceneManager.LoadScene("StartScene");
-        LoadUI(SceneManager.GetSceneByName("StartScene").buildIndex);
 
         DataManager.Instance.SaveData();
         AudioManager.Instance.PlayBGM(AudioManager.BGM.BGM_TITLE);
@@ -43,13 +41,8 @@ public class GameManager : Singleton<GameManager>
 
         UIManager.Instance.init = true;
         SceneManager.LoadScene("GameScene");
-        LoadUI(SceneManager.GetSceneByName("GameScene").buildIndex);
         AudioManager.Instance.PlayBGM(AudioManager.BGM.BGM_INGAME);
     }
 
-    private void LoadUI(int index)
-    {
-        UIManager.Instance.LoadCurrentSceneUI(index);
-    }
 
 }

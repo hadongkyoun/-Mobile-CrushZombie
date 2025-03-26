@@ -109,7 +109,6 @@ public class DataManager : Singleton<DataManager>
         }
         string data = File.ReadAllText(path);
         playerData = JsonUtility.FromJson<PlayerDatas>(EncryptAndDecrypt(data));
-        UIManager.Instance.UpdateAllStartSceneUI();
         Debug.Log("LoadSuccess");
 
         return true;
@@ -135,12 +134,10 @@ public class DataManager : Singleton<DataManager>
         {
             playerData.acceleration += 0.5f;
             playerData.money -= playerData.needUpgradeGold_speed;
-            UIManager.Instance.UpdateMoneyText(playerData.money);
             playerData.needUpgradeGold_speed += 10;
             playerData.lv_speed++;
 
         }
-        UIManager.Instance.UpdateSpeedLevelAndMoney(playerData.lv_speed, playerData.needUpgradeGold_speed);
 
         SaveData();
     }
@@ -152,12 +149,10 @@ public class DataManager : Singleton<DataManager>
         {
             playerData.maxVanHP += 2.0f;
             playerData.money -= playerData.needUpgradeGold_durability;
-            UIManager.Instance.UpdateMoneyText(playerData.money);
             playerData.needUpgradeGold_durability += 10;
             playerData.lv_durability++;
         }
 
-        UIManager.Instance.UpdateCarHpLevelAndMoney(playerData.lv_durability, playerData.needUpgradeGold_durability);
         SaveData();
     }
 
@@ -169,12 +164,10 @@ public class DataManager : Singleton<DataManager>
         {
             playerData.increaseMoneyOffline += 0.2f;
             playerData.money -= playerData.needUpgradeGold_offline;
-            UIManager.Instance.UpdateMoneyText(playerData.money);
             playerData.needUpgradeGold_offline += 10;
             playerData.lv_offline++;
         }
 
-        UIManager.Instance.UpdateOfflineRewardsLevelAndMoney(playerData.lv_offline, playerData.needUpgradeGold_offline);
 
         SaveData();
     }

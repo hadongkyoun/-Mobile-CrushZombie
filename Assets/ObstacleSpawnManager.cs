@@ -47,8 +47,6 @@ public class ObstacleSpawnManager : MonoBehaviour
     {
         vanTransform = vanTransform.transform;
         saveVanPosition = vanTransform.position;
-
-        obstacleSpawnTime = GameManager.Instance.GetPlayTime;
     }
 
     private void Update()
@@ -63,7 +61,7 @@ public class ObstacleSpawnManager : MonoBehaviour
 
         currentTime += Time.deltaTime;
 
-        if (currentTime > obstacleSpawnTime)
+        if (currentTime > GameManager.Instance.GetPlayTime)
         {
             cinemachineBrain.enabled = false;
             return;

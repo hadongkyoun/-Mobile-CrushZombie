@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VanUIUpdater : MonoBehaviour
+public class InGameUIUpdater : MonoBehaviour
 {
 
     private VanEngine vanEngine;
@@ -15,10 +15,20 @@ public class VanUIUpdater : MonoBehaviour
     [SerializeField]
     private Text speedText;
 
-    [SerializeField]
-    private Animation speedUp;
-
     private bool sendResult = false;
+
+
+
+    [SerializeField]
+    private Animation speedUpAnimation;
+
+    [SerializeField]
+    private Text time;
+
+    [SerializeField]
+    private Text comboText;
+
+
 
     private void Awake()
     {
@@ -30,7 +40,7 @@ public class VanUIUpdater : MonoBehaviour
     {
         if (!GameManager.Instance.playerDead)
         {
-            
+            time.text = $"{GameManager.Instance.GetPlayTime}:F0";
 
             if (vanEngine == null)
             {
@@ -66,11 +76,22 @@ public class VanUIUpdater : MonoBehaviour
         speedText.text = $"{vanStraightSpeed:F0}KM";
     }
 
-    //public void ComboSpeedUpEffect()
-    //{
-    //    // 콤보로인해 스피드가 급증하는 경우
-    //    speedUp.Play();
-    //    AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_UPGRADE);
-    //}
+    public void ResetComboText()
+    {
+        comboText.text = "";
+    }
+    public void UpdateComboText(int combo)
+    {
+        comboText.text = $"Combo {combo}";
+        if (comboText.TryGetComponent<Animation>(out Animation animation))
+        {
+            animation.Play();
+        }
+    }
+
+    public void ActivateSpeedUpAnim()
+    {
+        speedUpAnimation.Play();
+    }
 
 }

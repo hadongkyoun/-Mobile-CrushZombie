@@ -6,7 +6,9 @@ public class CrushManager : MonoBehaviour
     [SerializeField]
     private VanEngine vanEngine;
     private CameraHandler cameraHandler;
- 
+
+    [SerializeField]
+    private InGameUIUpdater inGameUIUpdater;
 
     private float kill = 0;
 
@@ -38,7 +40,7 @@ public class CrushManager : MonoBehaviour
             {
                 multiKillReset = true;
                 combo++;
-                UIManager.Instance.UpdateComboText(combo);
+                inGameUIUpdater.UpdateComboText(combo);
 
                 StartCoroutine(turnStartFalse());
             }
@@ -52,7 +54,7 @@ public class CrushManager : MonoBehaviour
             {
                 vanEngine.SpeedUp();
                 AudioManager.Instance.PlaySFX(AudioManager.SFX.SFX_SPEEDUP);
-                UIManager.Instance.ActivateSpeedUpAnim();
+                inGameUIUpdater.ActivateSpeedUpAnim();
             }
 
 
@@ -86,7 +88,7 @@ public class CrushManager : MonoBehaviour
         {
             combo = 0;
         }
-        UIManager.Instance.ResetComboText();
+        inGameUIUpdater.ResetComboText();
         cameraHandler.Shake();
 
         //// 현재 정보 업데이트
