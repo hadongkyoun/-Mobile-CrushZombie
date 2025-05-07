@@ -1,6 +1,8 @@
 # CRUSH ZOMBIE
 
-This is still in test mode. It has some bugs, and there are no tutorials yet. There's also a major sound issue. But overall, it's a pretty fun game.
+### <b>This is still in test mode</b>. 
+
+It has some bugs, and there are no tutorials yet. There's also a major sound issue. But overall, it's a pretty fun game.
 
 If you have any feedback, feel free to contact me anytime.😊
  
